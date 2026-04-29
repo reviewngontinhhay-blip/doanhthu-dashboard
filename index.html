@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking PR Manager</title>
+<style>
+:root{--bg:#f5f4f0;--card:#fff;--bd:#e5e3db;--tx:#1a1a1a;--mu:#777770;--hi:#aaa9a2;
+  --cc:#c44a72;--cc-bg:#fdf0f5;--pt:#2d7dd2;--pt-bg:#eef4fd;
+  --pend:#888;--pend-bg:#f0f0ec;--do:#b07800;--do-bg:#fef6e4;
+  --dn:#1a8a64;--dn-bg:#e8f7f1;--red:#b52b27;--red-bg:#fdecea}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--tx);font-size:14px}
+/* HEADER */
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:0 20px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;min-height:50px;gap:12px}
+.hl{display:flex;align-items:center;gap:20px}
+.hl h1{font-size:15px;font-weight:700;white-space:nowrap}
+.hr{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.live-tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--dn-bg);color:var(--dn);display:flex;align-items:center;gap:4px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--dn)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.live-dot{animation:pulse 2s infinite}
+.upd-time{font-size:11px;color:var(--hi);white-space:nowrap}
+/* TABS */
+.tabs{display:flex;gap:2px}
+.tab{padding:14px 16px;border:none;background:none;cursor:pointer;font-size:13px;color:var(--mu);border-bottom:2px solid transparent;font-weight:500;transition:color .12s}
+.tab:hover{color:var(--tx)}
+.tab.on{color:var(--tx);border-bottom-color:var(--tx)}
+/* BUTTONS */
+.btn-p{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:8px;border:none;background:var(--tx);color:#fff;cursor:pointer;font-size:13px;font-weight:500}
+.btn-p:hover{opacity:.85}
+.btn-s{padding:6px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--card);cursor:pointer;font-size:13px;color:var(--tx)}
+.btn-s:hover{background:var(--bg)}
+.btn-ic{width:32px;height:32px;border-radius:8px;border:1px solid var(--bd);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--mu)}
+.btn-ic:hover{background:var(--bg);color:var(--tx)}
+.btn-del{padding:6px 12px;border-radius:8px;border:none;background:var(--red-bg);color:var(--red);cursor:pointer;font-size:13px;font-weight:500}
+/* CONTENT */
+.content{max-width:1100px;margin:0 auto;padding:20px;display:none}
+.content.on{display:block}
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.scard{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:18px 16px}
+.scard .lb{font-size:12px;color:var(--mu);margin-bottom:6px}
+.scard .vl{font-size:26px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.scard .sb{font-size:11px;color:var(--hi);margin-top:5px}
+/* SHEET STATUS */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:16px}
+.sitem{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;font-size:12px}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sdot.ok{background:var(--dn)}.sdot.ld{background:var(--do);animation:pulse 1.5s infinite}.sdot.er{background:var(--red)}.sdot.id{background:var(--bd)}
+.sname{flex:1;font-weight:500}.sval{color:var(--mu);font-size:11px}
+/* CHARTS */
+.charts-row{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px}
+.ccrd{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:18px}
+.ctitle{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--mu);margin-bottom:12px}
+.legend{display:flex;gap:14px;margin-bottom:10px}
+.li{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--mu)}
+.ld-dot{width:9px;height:9px;border-radius:2px}
+/* TOP CLIENTS TABLE */
+.tcrd{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:18px}
+table.client-tbl{width:100%;border-collapse:collapse}
+.client-tbl th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mu);padding:0 8px 10px;border-bottom:1px solid var(--bd);text-align:left}
+.client-tbl td{padding:9px 8px;border-bottom:1px solid var(--bd);font-size:13px}
+.client-tbl tr:last-child td{border-bottom:none}
+.bar-bg{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;min-width:80px}
+.bar-fill{height:100%;border-radius:3px;background:var(--cc)}
+/* BADGE */
+.bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.bdg-cc{background:var(--cc-bg);color:var(--cc)}.bdg-pt{background:var(--pt-bg);color:var(--pt)}
+/* STATUS */
+.stpill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+.stpill.pend{background:var(--pend-bg);color:var(--pend)}
+.stpill.do{background:var(--do-bg);color:var(--do)}
+.stpill.dn{background:var(--dn-bg);color:var(--dn)}
+/* FILTER BAR */
+.fbar{display:flex;gap:8px;padding:0 0 14px;flex-wrap:wrap;align-items:center}
+.fbar select,.fbar input{padding:6px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--card);font-size:13px;color:var(--tx);outline:none}
+.fbar input{min-width:160px}
+.fclear{font-size:12px;color:var(--mu);cursor:pointer;padding:4px 8px}
+.fclear:hover{color:var(--tx)}
+.fcnt{font-size:12px;color:var(--hi);margin-left:auto}
+/* BOOKING CARDS */
+.bcard{background:var(--card);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.bcard-hdr{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+.bcard-hdr:hover{background:#fcfcfa}
+.binfo{flex:1;min-width:0}
+.bclient{font-weight:600;font-size:14px}
+.bstory{font-size:12px;color:var(--mu);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bmeta{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.bdate{font-size:12px;color:var(--mu)}
+.bamt{font-weight:700;font-size:15px}
+.bchevron{color:var(--hi);transition:transform .2s;flex-shrink:0}
+.bcard.open .bchevron{transform:rotate(180deg)}
+.bcard-body{display:none;border-top:1px solid var(--bd)}
+.bcard.open .bcard-body{display:block}
+/* PACKAGE ROW */
+.pkg{border-bottom:1px solid var(--bd)}
+.pkg:last-child{border-bottom:none}
+.pkg-hdr{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#fafaf8}
+.pkg-name{font-weight:600;font-size:13px;flex:1}
+.pkg-prog-wrap{width:100px;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;flex-shrink:0}
+.pkg-prog-bar{height:100%;border-radius:3px;transition:width .3s}
+.prog-pend{background:var(--pend)}.prog-do{background:var(--do)}.prog-dn{background:var(--dn)}
+.pkg-stat{font-size:11px;color:var(--mu);white-space:nowrap;flex-shrink:0;width:70px;text-align:right}
+/* TASK ROW */
+.task-row{display:flex;align-items:center;gap:10px;padding:8px 16px 8px 28px;border-top:1px solid var(--bd)}
+.task-st{display:inline-flex;align-items:center;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;flex-shrink:0;transition:opacity .12s;min-width:76px;justify-content:center}
+.task-st:hover{opacity:.75}
+.task-st-pend{background:var(--pend-bg);color:var(--pend)}
+.task-st-do{background:var(--do-bg);color:var(--do)}
+.task-st-dn{background:var(--dn-bg);color:var(--dn)}
+.task-name{flex:1;font-size:13px;color:var(--tx)}
+.task-name.done-txt{color:var(--hi);text-decoration:line-through}
+.task-who{font-size:12px;color:var(--mu);min-width:70px;font-weight:500}
+.task-link{font-size:11px;color:var(--pt);text-decoration:none;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.task-link:hover{text-decoration:underline}
+/* BOOKING STATS PILLS */
+.bk-stats{display:flex;gap:10px;padding:0 0 14px;flex-wrap:wrap}
+.bkpill{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:16px;font-size:12px;background:var(--card);border:1px solid var(--bd)}
+.bkpill b{font-weight:700}
+/* POLICY SECTION */
+.pol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.pol-card{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.pol-card-top{padding:14px 16px 12px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pol-name{font-weight:700;font-size:14px;line-height:1.4;flex:1}
+.pol-price{font-size:15px;font-weight:700;color:var(--cc);white-space:nowrap;padding-top:1px}
+.pol-card-body{padding:12px 16px;flex:1;display:flex;flex-direction:column;gap:8px}
+.pol-desc{font-size:13px;color:var(--tx);line-height:1.6}
+.pol-note{font-size:12px;color:var(--mu);line-height:1.5;padding-top:4px;border-top:1px solid var(--bd);margin-top:4px}
+.pol-loading{text-align:center;padding:40px;color:var(--mu)}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:200}
+.modal{background:var(--card);border-radius:16px;width:560px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.mhdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 14px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--card);z-index:1}
+.mhdr h2{font-size:15px;font-weight:600}
+.mclose{width:26px;height:26px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:15px;color:var(--mu);display:flex;align-items:center;justify-content:center}
+.mclose:hover{background:var(--bd)}
+.mbody{padding:18px 20px}
+.mfoot{padding:12px 20px;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:sticky;bottom:0;background:var(--card)}
+.mfoot-r{display:flex;gap:8px}
+.ff{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.ff label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mu)}
+.ff input,.ff textarea{padding:7px 10px;border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--tx);background:var(--card);outline:none;font-family:inherit}
+.ff input:focus,.ff textarea:focus{border-color:#999}
+.ff textarea{resize:vertical;min-height:80px;line-height:1.5}
+.setup-steps{background:var(--bg);border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.9}
+pre.code{background:#f0f0ea;padding:12px;border-radius:8px;font-size:11px;overflow-x:auto;max-height:280px;overflow-y:auto;line-height:1.6;margin-top:10px}
+/* BANNER */
+.banner{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:8px;font-size:13px;margin-bottom:16px}
+.banner.warn{background:var(--do-bg);color:var(--do)}.banner.ok{background:var(--dn-bg);color:var(--dn)}
+.banner a{margin-left:auto;color:inherit;font-weight:600;text-decoration:none}
+/* DELIVERY STATS (inside fund section) */
+.dlv-wrap{margin-top:14px;padding-top:14px;border-top:1px solid var(--bd)}
+.dlv-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mu);margin-bottom:10px}
+.dlv-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.dlv-chip{flex:1;min-width:140px;border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:3px}
+.dlv-chip.sent{background:var(--dn-bg);border:1px solid var(--dn)}
+.dlv-chip.pend{background:var(--do-bg);border:1px solid var(--do)}
+.dlv-chip .dc-lb{font-size:11px;font-weight:600}
+.dlv-chip.sent .dc-lb{color:var(--dn)}.dlv-chip.pend .dc-lb{color:var(--do)}
+.dlv-chip .dc-vl{font-size:18px;font-weight:700}
+.dlv-chip.sent .dc-vl{color:var(--dn)}.dlv-chip.pend .dc-vl{color:var(--do)}
+.dlv-chip .dc-sub{font-size:11px;color:var(--mu)}
+.dlv-bar-wrap{height:6px;background:var(--bd);border-radius:4px;overflow:hidden;margin-bottom:5px}
+.dlv-bar{height:100%;border-radius:4px;background:var(--dn);transition:width .4s}
+.dlv-legend{display:flex;justify-content:space-between;font-size:11px;color:var(--hi)}
+/* FUND CARDS */
+.fund-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.fcard{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:18px 16px}
+.fcard.hi{border-color:var(--dn);background:var(--dn-bg)}
+.fcard .lb{font-size:12px;color:var(--mu);margin-bottom:6px}
+.fcard .vl{font-size:26px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.fcard .sb{font-size:11px;color:var(--hi);margin-top:5px}
+/* EXPENSE TABLE */
+.ecrd{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:18px;margin-bottom:14px}
+.exp-tbl{width:100%;border-collapse:collapse}
+.exp-tbl th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mu);padding:0 10px 9px;border-bottom:1px solid var(--bd);text-align:left}
+.exp-tbl th:last-child{text-align:right}
+.exp-tbl td{padding:8px 10px;border-bottom:1px solid var(--bd);font-size:13px}
+.exp-tbl td:last-child{text-align:right;font-weight:700}
+.exp-tbl tr:last-child td{border-bottom:none}
+.exp-tbl tr:hover td{background:var(--bg)}
+/* DAILY STATS */
+.dcrd{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:18px;margin-top:14px}
+.drng-btn{padding:4px 11px;border-radius:6px;border:1px solid var(--bd);background:var(--card);cursor:pointer;font-size:12px;color:var(--mu)}
+.drng-btn.on{background:var(--tx);color:#fff;border-color:var(--tx)}
+.drng-btn:hover:not(.on){background:var(--bg)}
+.day-tbl{width:100%;border-collapse:collapse;margin-top:14px}
+.day-tbl th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:0 8px 9px;border-bottom:1px solid var(--bd);text-align:right}
+.day-tbl th:first-child{text-align:left}
+.day-tbl td{padding:7px 8px;border-bottom:1px solid var(--bd);font-size:13px;text-align:right}
+.day-tbl td:first-child{text-align:left;font-weight:500}
+.day-tbl tr:last-child td{border-bottom:none}
+.day-tbl tr:hover td{background:var(--bg)}
+/* MISC */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin .7s linear infinite;display:inline-block}
+.empty{text-align:center;padding:40px;color:var(--mu);font-size:13px}
+@media(max-width:700px){.stat-grid{grid-template-columns:1fr 1fr}.charts-row{grid-template-columns:1fr}.tabs .tab{padding:14px 10px;font-size:12px}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hl">
+    <h1>Booking PR</h1>
+    <nav class="tabs">
+      <button class="tab on" onclick="switchTab('dash')">Dashboard</button>
+      <button class="tab" onclick="switchTab('task')">Booking / Task</button>
+      <button class="tab" onclick="switchTab('policy')">Chính Sách</button>
+    </nav>
+  </div>
+  <div class="hr">
+    <span id="liveTag" style="display:none" class="live-tag"><span class="live-dot"></span>Live</span>
+    <span id="lastUpd" class="upd-time"></span>
+    <button class="btn-ic" onclick="loadAll()" title="Làm mới"><svg id="rIcon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M4 9A9 9 0 0116.5 5.5M20 15A9 9 0 017.5 18.5"/></svg></button>
+    <button class="btn-ic" onclick="openSetup()" title="Cài đặt Apps Script"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
+  </div>
+</header>
+
+<!-- DASHBOARD TAB -->
+<div id="tabDash" class="content on">
+  <div id="dBanner" class="banner warn" style="display:none"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="dBannerTxt"></span><a href="#" onclick="openSetup();return false">Cài đặt →</a></div>
+  <div class="stat-grid">
+    <div class="scard"><div class="lb">Tổng doanh thu</div><div class="vl" id="dTotal">—</div><div class="sb" id="dTotalSb">Đang tải...</div></div>
+    <div class="scard"><div class="lb">Tháng mới nhất</div><div class="vl" id="dCur">—</div><div class="sb" id="dCurSb">—</div></div>
+    <div class="scard"><div class="lb">Page Công chúa</div><div class="vl" style="color:var(--cc)" id="dCC">—</div><div class="sb">Tổng cộng</div></div>
+    <div class="scard"><div class="lb">Page Phù thuỷ</div><div class="vl" style="color:var(--pt)" id="dPT">—</div><div class="sb">Tổng cộng</div></div>
+  </div>
+  <div class="fund-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="fcard"><div class="lb">Quỹ Công chúa</div><div class="vl" style="color:var(--cc)" id="dQuyCC">—</div><div class="sb" id="dQuyCCSb">Sheet mới nhất</div></div>
+    <div class="fcard"><div class="lb">Quỹ Phù thuỷ</div><div class="vl" style="color:var(--pt)" id="dQuyPT">—</div><div class="sb" id="dQuyPTSb">Sheet mới nhất</div></div>
+    <div class="fcard hi"><div class="lb">💰 Tổng quỹ còn lại</div><div class="vl" style="color:var(--dn)" id="dQuy">—</div><div class="sb">CC + PT (đã trừ chi phí)</div></div>
+  </div>
+  <div class="ecrd" style="margin-bottom:14px">
+    <div class="dlv-label">Trong quỹ — theo tình trạng booking</div>
+    <div class="dlv-row">
+      <div class="dlv-chip sent">
+        <div class="dc-lb">✅ Đã hoàn thành cho khách</div>
+        <div class="dc-vl" id="dlvSentAmt">—</div>
+        <div class="dc-sub" id="dlvSentCnt">— booking</div>
+      </div>
+      <div class="dlv-chip pend">
+        <div class="dc-lb">⏳ Chưa hoàn thành</div>
+        <div class="dc-vl" id="dlvPendAmt">—</div>
+        <div class="dc-sub" id="dlvPendCnt">— booking</div>
+      </div>
+    </div>
+    <div class="dlv-bar-wrap"><div class="dlv-bar" id="dlvBar" style="width:0%"></div></div>
+    <div class="dlv-legend"><span id="dlvLegL">Hoàn thành 0%</span><span id="dlvLegR">Chưa xong 100%</span></div>
+    <details style="margin-top:12px">
+      <summary style="cursor:pointer;font-size:12px;color:var(--mu);user-select:none;padding:4px 0">Xem chi tiết từng booking →</summary>
+      <div style="margin-top:8px;overflow-x:auto">
+        <table id="dlvDetail" style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr style="background:var(--bg2);text-align:left">
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Tên khách</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Tên truyện</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Sheet</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd);text-align:right">Số tiền</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd);text-align:center">Tình trạng</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Ghi chú</th>
+            </tr>
+          </thead>
+          <tbody id="dlvDetailBody"><tr><td colspan="6" style="padding:8px;color:var(--mu)">Đang tải...</td></tr></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+  <div class="ecrd">
+    <div class="ctitle" style="margin-bottom:12px">Lịch sử chi lương (từ ghi chú "chốt")</div>
+    <table class="exp-tbl">
+      <thead><tr><th>Ngày</th><th>Sheet</th><th>Ghi chú</th><th>Số tiền</th></tr></thead>
+      <tbody id="expTbl"><tr><td colspan="4" class="empty">Đang tải...</td></tr></tbody>
+    </table>
+  </div>
+  <div class="sgrid" id="sheetGrid"></div>
+  <div class="charts-row">
+    <div class="ccrd">
+      <div class="ctitle">Doanh thu theo tháng</div>
+      <div class="legend"><div class="li"><div class="ld-dot" style="background:var(--cc)"></div>Công chúa</div><div class="li"><div class="ld-dot" style="background:var(--pt)"></div>Phù thuỷ</div></div>
+      <div style="position:relative;height:220px"><canvas id="barChart" role="img" aria-label="Biểu đồ doanh thu hàng tháng">Dữ liệu đang tải</canvas></div>
+    </div>
+    <div class="ccrd">
+      <div class="ctitle">Phân bổ 2 page</div>
+      <div style="position:relative;height:170px"><canvas id="donutChart" role="img" aria-label="Phân bổ doanh thu theo page">Dữ liệu đang tải</canvas></div>
+      <div class="legend" style="justify-content:center;margin-top:12px;margin-bottom:0">
+        <div class="li"><div class="ld-dot" style="background:var(--cc)"></div>CC <b id="pctCC">—</b></div>
+        <div class="li"><div class="ld-dot" style="background:var(--pt)"></div>PT <b id="pctPT">—</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="tcrd">
+    <div class="ctitle" style="margin-bottom:14px">Top khách hàng</div>
+    <table class="client-tbl"><thead><tr><th style="width:28px">#</th><th>Tên khách</th><th style="text-align:right;width:90px">Doanh thu</th><th style="width:160px"></th></tr></thead>
+    <tbody id="topClients"><tr><td colspan="4" class="empty">Đang tải...</td></tr></tbody></table>
+  </div>
+  <div class="dcrd">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+      <div class="ctitle" style="margin:0">Doanh thu theo ngày</div>
+      <div style="display:flex;gap:6px">
+        <button class="drng-btn on" id="dr7"  onclick="setDRange(7)">7 ngày</button>
+        <button class="drng-btn"    id="dr30" onclick="setDRange(30)">30 ngày</button>
+        <button class="drng-btn"    id="dr0"  onclick="setDRange(0)">Tất cả</button>
+      </div>
+    </div>
+    <div style="position:relative;height:200px"><canvas id="dayChart"></canvas></div>
+    <table class="day-tbl">
+      <thead><tr>
+        <th>Ngày</th>
+        <th style="color:var(--cc)">Công chúa</th>
+        <th style="color:var(--pt)">Phù thuỷ</th>
+        <th>Tổng</th>
+        <th>Booking</th>
+      </tr></thead>
+      <tbody id="dayTbl"><tr><td colspan="5" class="empty">Đang tải...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TASK TAB -->
+<div id="tabTask" class="content">
+  <div class="fbar">
+    <select id="fPg" onchange="filterB()"><option value="">Tất cả page</option><option value="cc">Công chúa</option><option value="pt">Phù thuỷ</option></select>
+    <select id="fMo" onchange="filterB()"><option value="">Tất cả tháng</option></select>
+    <select id="fSt" onchange="filterB()"><option value="">Tất cả trạng thái</option><option value="pend">Chưa làm</option><option value="do">Đang làm</option><option value="dn">Hoàn thành</option></select>
+    <input type="text" id="fSr" placeholder="Tìm tên khách..." oninput="filterB()">
+    <span class="fclear" onclick="clearBF()">Xoá lọc</span>
+    <span class="fcnt" id="bCnt"></span>
+  </div>
+  <div class="bk-stats">
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--tx);display:inline-block"></span>Tổng <b id="bkTot">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--pend);display:inline-block"></span>Chưa làm <b id="bkPend">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--do);display:inline-block"></span>Đang làm <b id="bkDo">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--dn);display:inline-block"></span>Hoàn thành <b id="bkDn">0</b></div>
+  </div>
+  <div id="bookingList"><div class="empty"><span class="spin">↻</span> Đang tải booking...</div></div>
+</div>
+
+<!-- POLICY TAB -->
+<div id="tabPolicy" class="content">
+  <div id="polContent"><div class="empty"><span class="spin">↻</span> Đang tải chính sách...</div></div>
+</div>
+
+<!-- SETUP MODAL -->
+<div id="setupOverlay" class="overlay" style="display:none" onclick="if(event.target===this)closeSetup()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><h2>Cài đặt Apps Script</h2><button class="mclose" onclick="closeSetup()">✕</button></div>
+    <div class="mbody">
+      <p style="font-size:13px;color:var(--mu);margin-bottom:16px;line-height:1.7">Cài Apps Script để thêm/sửa task và đồng bộ 2 chiều với Google Sheets.</p>
+      <div class="setup-steps">
+        <b>1.</b> Mở Google Sheets → <b>Extensions → Apps Script</b><br>
+        <b>2.</b> Xoá code cũ, dán code dưới vào<br>
+        <b>3.</b> <b>Deploy → New deployment → Web app</b><br>
+        <b>4.</b> Execute as: <b>Me</b> · Who has access: <b>Anyone</b><br>
+        <b>5.</b> Copy URL web app → dán vào ô bên dưới
+      </div>
+      <details style="margin-bottom:16px">
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;padding:6px 0">Xem Apps Script code →</summary>
+        <pre class="code" id="ascCode"></pre>
+        <button onclick="cpCode()" style="margin-top:6px;padding:5px 12px;border:1px solid var(--bd);border-radius:6px;background:var(--card);cursor:pointer;font-size:12px">Copy code</button>
+      </details>
+      <div class="ff"><label>URL Apps Script Web App</label><input type="text" id="aUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>
+      <div id="testRes" style="font-size:13px;min-height:18px"></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-s" onclick="testConn()">Kiểm tra kết nối</button>
+      <div class="mfoot-r"><button class="btn-s" onclick="closeSetup()">Huỷ</button><button class="btn-p" onclick="saveSetup()">Lưu</button></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ═══ CONFIG ═══════════════════════════════════════════
+const SID = '1Ha4o05fe9YuNRpfoO5HgvmdfaULxwqI9a-2UyDSc5rU';
+let AU = localStorage.getItem('bkAU') || '';
+
+const BSHEETS = [
+  {name:'Tháng 11-2025',page:'cc',mo:'T11/25',mi:0},
+  {name:'Tháng 12-2025',page:'cc',mo:'T12/25',mi:1},
+  {name:'Tháng 1-2026', page:'cc',mo:'T1/26', mi:2},
+  {name:'Tháng 2-2026', page:'cc',mo:'T2/26', mi:3},
+  {name:'Tháng 3-2026', page:'cc',mo:'T3/26', mi:4},
+  {name:'Tháng 4-2026', page:'cc',mo:'T4/26', mi:5},
+  {name:'Phù thuỷ T4-2026',page:'pt',mo:'T4/26',mi:5},
+  {name:'Công chúa T5-2026',page:'cc',mo:'T5/26',mi:6},
+];
+const MONTHS = ['T11/25','T12/25','T1/26','T2/26','T3/26','T4/26','T5/26'];
+const POLICY_SHEET = 'Gói + Chính Sách';
+
+// ═══ STATE ═════════════════════════════════════════════
+let ccRev   = new Array(MONTHS.length).fill(0);
+let ptRev   = new Array(MONTHS.length).fill(0);
+let ccFunds = new Array(MONTHS.length).fill(0);
+let ptFunds = new Array(MONTHS.length).fill(0);
+let allBookings = [];
+let filtBookings = [];
+let policyData = [];
+let sheetSt = {};
+let curTab = 'dash';
+let polLoaded = false;
+let barChart, donutChart, dayChart;
+let dRange = 7;
+let allExpenses = [];
+
+// ═══ HELPERS ══════════════════════════════════════════
+const uid = () => '_' + Math.random().toString(36).substr(2,9);
+const isDone = v => {
+  if(!v&&v!==0)return false;
+  const s=String(v).trim();
+  return s==='Xong'||s==='Đã gửi khách'||v===true||(!isNaN(parseFloat(s))&&parseFloat(s)>=1);
+};
+const taskSt = (tiendo, nguoilam) => {
+  if(tiendo){const s=String(tiendo).trim();
+    if(s==='Xong'||s==='Đã gửi khách')return'dn';
+    if(s==='Đang làm')return'do';
+    if(!isNaN(parseFloat(s))&&parseFloat(s)>=1)return'dn';
+  }
+  if(nguoilam&&String(nguoilam).trim())return'do';
+  return'pend';
+};
+const stOf = tasks => {
+  if (!tasks || !tasks.length) return 'pend';
+  const d = tasks.filter(t => t.done).length;
+  if (d === 0) return 'pend';
+  if (d === tasks.length) return 'dn';
+  return 'do';
+};
+const stLbl = s => ({pend:'Chưa làm',do:'Đang làm',dn:'Hoàn thành'}[s]||s);
+const pgOf = n => (n&&(n.includes('Phù thu')||n.includes('Phù thủ')))?'pt':'cc';
+const moOf = n => { const s=BSHEETS.find(x=>x.name===n); return s?s.mo:n; };
+const fmtD = v => { if(!v)return''; try{const d=new Date(v);if(!isNaN(d))return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'2-digit'})}catch(e){} return String(v).substring(0,10); };
+const fmtM = v => { const n=parseFloat(v); return (!n||isNaN(n))?'':n.toLocaleString()+'k'; };
+
+// ═══ JSONP ═════════════════════════════════════════════
+function jLoad(sn) {
+  return new Promise((res,rej) => {
+    const cb='_g'+Date.now()+Math.floor(Math.random()*9999);
+    const t=setTimeout(()=>{delete window[cb];rej(new Error('timeout'))},13000);
+    window[cb]=d=>{clearTimeout(t);delete window[cb];if(d&&d.status==='ok')res(d.table);else rej(new Error(d?d.status:'err'))};
+    const sc=document.createElement('script');
+    sc.src='https://docs.google.com/spreadsheets/d/'+SID+'/gviz/tq?tqx=out:json;responseHandler:'+cb+'&sheet='+encodeURIComponent(sn)+'&headers=1&t='+Date.now();
+    sc.onerror=()=>{clearTimeout(t);delete window[cb];rej(new Error('load'))};
+    document.head.appendChild(sc);
+  });
+}
+
+// ═══ APPS SCRIPT ═══════════════════════════════════════
+function asCall(p) {
+  if(!AU)return Promise.reject(new Error('no_url'));
+  return new Promise((res,rej)=>{
+    const cb='_a'+Date.now()+Math.floor(Math.random()*9999);
+    const t=setTimeout(()=>{delete window[cb];rej(new Error('timeout'))},15000);
+    window[cb]=d=>{clearTimeout(t);delete window[cb];res(d)};
+    const sc=document.createElement('script');
+    sc.src=AU+'?'+new URLSearchParams({...p,callback:cb}).toString();
+    sc.onerror=()=>{clearTimeout(t);delete window[cb];rej(new Error('err'))};
+    document.head.appendChild(sc);
+  });
+}
+
+// ═══ PARSE: Revenue (tổng Số Tiền của tháng đó) ════════
+function parseRev(table) {
+  if(!table||!table.cols||!table.rows) return 0;
+  const soIdx=table.cols.findIndex(c=>c.label&&c.label.includes('Số Tiền'));
+  if(soIdx<0) return 0;
+  let s=0;
+  table.rows.forEach(r=>{const c=r.c[soIdx];if(c&&typeof c.v==='number'&&c.v>0)s+=c.v});
+  return s;
+}
+
+// ═══ PARSE: Fund (cột Tổng ở hàng 2 = quỹ tích lũy) ═══
+function parseFund(table) {
+  if(!table||!table.cols||!table.rows||!table.rows.length) return 0;
+  const tongIdx=table.cols.findIndex(c=>c.label&&c.label.includes('Tổng'));
+  if(tongIdx<0) return 0;
+  // Hàng 2 trong sheet = table.rows[0] sau header
+  // Duyệt vài hàng đầu để tìm giá trị Tổng (có thể lệch 1-2 hàng)
+  for(let i=0;i<Math.min(4,table.rows.length);i++){
+    const cell=table.rows[i].c[tongIdx];
+    if(cell&&typeof cell.v==='number'&&cell.v>0) return cell.v;
+  }
+  return 0;
+}
+
+// ═══ PARSE: Bookings (hierarchical) ════════════════════
+function parseBookings(table, sheetName) {
+  if(!table||!table.cols||!table.rows)return[];
+  const cols=table.cols.map(c=>(c.label||c.id||'').trim());
+  const g=(row,col)=>{const i=cols.indexOf(col);if(i<0)return null;const x=row.c[i];return x?x.v:null};
+  // Đọc cell kèm formatted value để detect hyperlink
+  const gCell=(row,col)=>{const i=cols.indexOf(col);if(i<0)return null;return row.c[i]||null};
+  // Tìm cột checkbox "Note (tiktok tick khi đủ 100 tim, còn lại tick khi hoàn thành)"
+  const chkColIdx = cols.findIndex(c => /tick khi ho[àa]n th[àa]nh/i.test(c) || /^note\s*\(/i.test(c));
+  // getChkInfo: phân biệt "checkbox tồn tại nhưng chưa tick" {v:false} vs "ô rỗng" null
+  // → hasChk=true nếu cell là boolean (checkbox), kể cả false (chưa tick)
+  const getChkInfo = (row) => {
+    if(chkColIdx < 0) return {checked:false, hasChk:false};
+    const cell = row.c[chkColIdx];
+    if(!cell || cell.v === null || cell.v === undefined) return {checked:false, hasChk:false};
+    if(typeof cell.v === 'boolean') return {checked:cell.v, hasChk:true};
+    return {checked:!!cell.v, hasChk:false};
+  };
+  const getChk = (row) => getChkInfo(row).checked;
+  const pg=pgOf(sheetName),mo=moOf(sheetName);
+  const bookings=[];let curB=null,curP=null;
+  table.rows.forEach((row,ri)=>{
+    const tk=g(row,'Tên Khách');const nd=g(row,'Nội Dung');const hm=g(row,'Hạng mục');
+    const nl=g(row,'Người làm');const lp=g(row,'Link page/tiktok');
+    const td=g(row,'Tiến độ');const st=g(row,'Số Tiền');
+    const tt=g(row,'Tên Truyện');const ng=g(row,'Ngày ck');
+    const chkInfo=getChkInfo(row);const chk=chkInfo.checked;const hasChk=chkInfo.hasChk;
+    // Detect tentruyen là hyperlink: v bắt đầu bằng http, HOẶC f ≠ v (hyperlink formula)
+    const ttCell=gCell(row,'Tên Truyện');
+    const ttLinked = ttCell && (
+      (ttCell.v && /^https?:\/\//i.test(String(ttCell.v))) ||
+      (ttCell.f && ttCell.v && String(ttCell.f).trim() !== String(ttCell.v).trim())
+    );
+    // New booking
+    if(tk&&String(tk).trim()){
+      curB={_id:uid(),_sheet:sheetName,_row:ri+2,page:pg,month:mo,
+        tenkhach:String(tk).trim(),tentruyen:tt?String(tt).trim():'',
+        tentruyen_linked: !!ttLinked,
+        ngayck:ng||'',sotien:parseFloat(st)||0,packages:[]};
+      bookings.push(curB);curP=null;
+    }
+    if(!curB)return;
+    // New package — capture sotien riêng (mỗi nd-row có thể có giá riêng)
+    if(nd&&String(nd).trim()){
+      curP={_id:uid(),name:String(nd).trim(),tasks:[],sotien:parseFloat(st)||0};
+      curB.packages.push(curP);
+    }
+    if(!curP){
+      // Create a default package if none exists
+      curP={_id:uid(),name:'—',tasks:[]};
+      curB.packages.push(curP);
+    }
+    // Add task
+    const tname=hm?String(hm).trim():(nd?String(nd).trim():'Task');
+    const nlStr=nl?String(nl).trim():'';
+    const tst=taskSt(td,nlStr);
+    curP.tasks.push({_id:uid(),_sheet:sheetName,_row:ri+2,name:tname,
+      nguoilam:nlStr,linkpage:lp?String(lp).trim():'',
+      tiendo:td||'',done:tst==='dn',status:tst,
+      tentruyen_row:tt?String(tt).trim():'',
+      checked:chk, hasChk:hasChk});
+  });
+  // Calc status
+  bookings.forEach(b=>{
+    b.packages.forEach(p=>{
+      p.total=p.tasks.length;
+      p.doneCount=p.tasks.filter(t=>t.status==='dn').length;
+      p.doCount=p.tasks.filter(t=>t.status==='do').length;
+      p.progress=p.total>0?Math.round(p.doneCount/p.total*100):0;
+      p.status=p.total>0&&p.doneCount===p.total?'dn':p.doneCount>0||p.doCount>0?'do':'pend';
+    });
+    const tot=b.packages.reduce((s,p)=>s+p.total,0);
+    const dn=b.packages.reduce((s,p)=>s+p.doneCount,0);
+    b.totalTasks=tot;b.doneTasks=dn;
+    b.progress=tot>0?Math.round(dn/tot*100):0;
+    b.status=dn===0?'pend':dn===tot?'dn':'do';
+  });
+  return bookings;
+}
+
+// ═══ PARSE: Expenses (từ ghi chú "chốt XXXX") ══════════
+function parseExpenses(table, sheetName) {
+  if(!table||!table.cols||!table.rows) return [];
+  const expenses = [];
+  const tryParseTextDate = v => {
+    const dm = v.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+    if(!dm) return null;
+    const yr = dm[3].length===2 ? 2000+parseInt(dm[3]) : parseInt(dm[3]);
+    const dt = new Date(yr, parseInt(dm[2])-1, parseInt(dm[1]));
+    return isNaN(dt) ? null : dt;
+  };
+
+  table.rows.forEach(row => {
+    if(!row.c) return;
+
+    // Bước 1: tìm ô "chốt XXXX" và ghi lại index cột
+    let amount = null, noteText = '', chotIdx = -1, carry = null;
+    row.c.forEach((cell, ci) => {
+      if(!cell||cell.v==null) return;
+      const v = String(cell.v).trim();
+      const mChot = v.match(/ch[oố]t\s*(\d{3,}[\d,.]*)/i);
+      if(mChot) {
+        amount = parseFloat(mChot[1].replace(/,/g,''));
+        noteText = v; chotIdx = ci;
+      }
+      const mCarry = v.match(/đã cộng\s*(\d[\d,.]*)/i);
+      if(mCarry) carry = parseFloat(mCarry[1].replace(/,/g,''));
+    });
+    if(!amount || chotIdx < 0) return;
+
+    // Bước 2: tìm ngày ở các ô gần ô "chốt" (±6 cột), ưu tiên trước
+    let date = null;
+    const lo = Math.max(0, chotIdx-6), hi = Math.min(row.c.length, chotIdx+7);
+    for(let i=lo; i<hi && !date; i++) {
+      const cell = row.c[i]; if(!cell||cell.v==null) continue;
+      const v = String(cell.v).trim();
+      date = tryParseTextDate(v);
+      if(!date) { const d=parseDate(cell.v); if(d) date=d; }
+    }
+    // Bước 3: nếu chưa tìm được, quét phần cột phụ (từ cột 12 trở đi) tránh cột A
+    if(!date) {
+      for(let i=12; i<row.c.length && !date; i++) {
+        const cell = row.c[i]; if(!cell||cell.v==null) continue;
+        date = tryParseTextDate(String(cell.v).trim());
+      }
+    }
+
+    expenses.push({ sheet: sheetName, date, amount, note: noteText, carry });
+  });
+  return expenses;
+}
+
+// ═══ PARSE: Policy ═════════════════════════════════════
+function parsePolicyCols(table) {
+  if(!table||!table.cols||!table.rows)return[];
+  const cols=table.cols.map(c=>(c.label||c.id||'').trim());
+  // Flexible column finder — partial, case-insensitive
+  const findCol = (...keys) => {
+    for(const k of keys){
+      const i=cols.findIndex(c=>c.toLowerCase().includes(k.toLowerCase()));
+      if(i>=0)return i;
+    }
+    return -1;
+  };
+  const iName = findCol('tên','name');
+  const iDesc = findCol('nội dung','mô tả','desc','content');
+  const iNote = findCol('ghi chú','ghi chu','note');
+  const iPrice= findCol('giá','gia','price');
+  const gv=(row,i)=>{if(i<0)return'';const x=row.c[i];return x&&x.v!=null?String(x.v).trim():''};
+  return table.rows.map(row=>({
+    ten:  gv(row,iName),
+    noidung: gv(row,iDesc),
+    ghichu:  gv(row,iNote),
+    gia:  gv(row,iPrice)
+  })).filter(r=>r.ten||r.noidung);
+}
+
+// ═══ LOAD ALL ══════════════════════════════════════════
+async function loadAll() {
+  const ic=document.getElementById('rIcon');ic.classList.add('spin');
+  document.getElementById('liveTag').style.display='none';
+  ccRev  =new Array(MONTHS.length).fill(0);
+  ptRev  =new Array(MONTHS.length).fill(0);
+  ccFunds=new Array(MONTHS.length).fill(0);
+  ptFunds=new Array(MONTHS.length).fill(0);
+  allBookings=[];
+  allExpenses=[];
+  BSHEETS.forEach(s=>{sheetSt[s.name]='ld'});
+  renderSheetGrid();
+
+  for(const s of BSHEETS){
+    try{
+      const tbl=await jLoad(s.name);
+      const rev=parseRev(tbl);
+      const fund=parseFund(tbl);
+      if(s.page==='cc'){ccRev[s.mi]=rev;ccFunds[s.mi]=fund;}
+      else{ptRev[s.mi]=rev;ptFunds[s.mi]=fund;}
+      const bks=parseBookings(tbl,s.name);
+      allBookings.push(...bks);
+      const exps=parseExpenses(tbl,s.name);
+      allExpenses.push(...exps);
+      sheetSt[s.name]='ok';
+    }catch(e){sheetSt[s.name]='er';}
+    renderSheetGrid();
+  }
+
+  // Load policy
+  try{const tbl=await jLoad(POLICY_SHEET);policyData=parsePolicyCols(tbl);}catch(e){policyData=[];}
+
+  updateDashboard();
+  renderDayStats();
+  filterB();
+  if(curTab==='policy')renderPolicy();
+
+  ic.classList.remove('spin');
+  document.getElementById('liveTag').style.display='flex';
+  document.getElementById('lastUpd').textContent='Cập nhật '+new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+  if(!AU){showBanner('Chưa cài Apps Script — chỉ xem dữ liệu, chưa sửa được task.');} else {document.getElementById('dBanner').style.display='none';}
+}
+
+function showBanner(txt){const b=document.getElementById('dBanner');b.style.display='flex';document.getElementById('dBannerTxt').textContent=txt;}
+
+// ═══ DASHBOARD ══════════════════════════════════════════
+function updateDashboard(){
+  const totalCC=ccRev.reduce((a,b)=>a+b,0);
+  const totalPT=ptRev.reduce((a,b)=>a+b,0);
+  const grand=totalCC+totalPT;
+  // Mỗi page lấy tháng mới nhất có thu > 0 độc lập
+  let ccLi=0;for(let i=MONTHS.length-1;i>=0;i--){if(ccRev[i]>0){ccLi=i;break;}}
+  let ptLi=0;for(let i=MONTHS.length-1;i>=0;i--){if(ptRev[i]>0){ptLi=i;break;}}
+  const latestTotal=ccRev[ccLi]+ptRev[ptLi];
+  const latestLabel=ccLi===ptLi?MONTHS[ccLi]+' (2 page)':'CC '+MONTHS[ccLi]+' + PT '+MONTHS[ptLi];
+  document.getElementById('dTotal').textContent=grand.toLocaleString()+'k';
+  document.getElementById('dTotalSb').textContent='T11/2025 – T5/2026';
+  document.getElementById('dCur').textContent=latestTotal.toLocaleString()+'k';
+  document.getElementById('dCurSb').textContent=latestLabel;
+  document.getElementById('dCC').textContent=totalCC.toLocaleString()+'k';
+  document.getElementById('dPT').textContent=totalPT.toLocaleString()+'k';
+  const pcc=grand>0?Math.round(totalCC/grand*100):0;
+  document.getElementById('pctCC').textContent=pcc+'%';
+  document.getElementById('pctPT').textContent=(100-pcc)+'%';
+  barChart.data.datasets[0].data=[...ccRev];
+  barChart.data.datasets[1].data=[...ptRev];
+  barChart.update('active');
+  donutChart.data.datasets[0].data=[totalCC||1,totalPT];
+  donutChart.update('active');
+  renderTopClients();
+  renderExpenses();
+  renderDeliveryStats();
+}
+
+function calcFund() {
+  // Lấy giá trị cột Tổng (quỹ tích lũy) mới nhất ≠ 0 của từng page
+  let ccFund=0, ccSheet='', ptFund=0, ptSheet='';
+  for(let i=MONTHS.length-1;i>=0;i--){
+    if(ccFund===0&&ccFunds[i]>0){
+      ccFund=ccFunds[i];
+      const s=BSHEETS.filter(x=>x.page==='cc'&&x.mi===i);
+      ccSheet=s.length?s[s.length-1].mo:'';
+    }
+    if(ptFund===0&&ptFunds[i]>0){
+      ptFund=ptFunds[i];
+      const s=BSHEETS.filter(x=>x.page==='pt'&&x.mi===i);
+      ptSheet=s.length?s[s.length-1].mo:'';
+    }
+    if(ccFund>0&&ptFund>0)break;
+  }
+  return{cc:ccFund,ccSheet,pt:ptFund,ptSheet,total:ccFund+ptFund};
+}
+
+function renderExpenses(grandTotal) {
+  const fund = calcFund();
+  document.getElementById('dQuyCC').textContent = fund.cc>0 ? fund.cc.toLocaleString()+'k' : '—';
+  document.getElementById('dQuyCCSb').textContent = fund.ccSheet ? 'Sheet '+fund.ccSheet : 'Chưa có dữ liệu';
+  document.getElementById('dQuyPT').textContent = fund.pt>0 ? fund.pt.toLocaleString()+'k' : '—';
+  document.getElementById('dQuyPTSb').textContent = fund.ptSheet ? 'Sheet '+fund.ptSheet : 'Chưa có dữ liệu';
+  document.getElementById('dQuy').textContent = fund.total>0 ? fund.total.toLocaleString()+'k' : '—';
+
+  if(!allExpenses.length) {
+    document.getElementById('expTbl').innerHTML='<tr><td colspan="4" style="text-align:center;padding:16px;color:var(--mu)">Không tìm thấy ghi chú "chốt" nào trong các sheet</td></tr>';
+    return;
+  }
+  // Sort newest first
+  const sorted=[...allExpenses].sort((a,b)=>{
+    if(!a.date&&!b.date)return 0;
+    if(!a.date)return 1;
+    if(!b.date)return -1;
+    return b.date-a.date;
+  });
+  let running = grandTotal||0;
+  document.getElementById('expTbl').innerHTML = sorted.map(e=>{
+    const dateStr = e.date ? e.date.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'2-digit'}) : '—';
+    const carry = e.carry ? `<br><span style="font-size:11px;color:var(--mu)">Cộng ${e.carry.toLocaleString()}k tháng trước</span>` : '';
+    return `<tr>
+      <td>${dateStr}</td>
+      <td style="color:var(--mu);font-size:12px">${e.sheet}</td>
+      <td>${e.note||'—'}${carry}</td>
+      <td style="color:var(--red)">−${e.amount.toLocaleString()}k</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderSheetGrid(){
+  const g=document.getElementById('sheetGrid');
+  g.innerHTML=BSHEETS.map(s=>{
+    const st=sheetSt[s.name]||'id';
+    const val=st==='ok'?(s.page==='cc'?ccRev[s.mi]:ptRev[s.mi]).toLocaleString()+'k':st==='ld'?'…':st==='er'?'Lỗi':'';
+    const pgBadge=s.page==='pt'?`<span style="color:var(--pt);font-size:10px;font-weight:700">PT</span>`:`<span style="color:var(--cc);font-size:10px;font-weight:700">CC</span>`;
+    return`<div class="sitem"><div class="sdot ${st}"></div><span class="sname">${s.mo} ${pgBadge}</span><span class="sval">${val}</span></div>`;
+  }).join('');
+}
+
+// ═══ DELIVERY STATS ════════════════════════════════════
+// Chỉ tính 3 sheet hiện tại (T4 CC, T4 PT, T5 CC) — các sheet cũ đã hoàn thành hết
+const DELIVERY_SHEETS = new Set(['Tháng 4-2026','Phù thuỷ T4-2026','Công chúa T5-2026']);
+
+function renderDeliveryStats() {
+  const fund = calcFund();
+  let sentAmt=0, pendAmt=0, sentCnt=0, pendCnt=0;
+  const detailRows = [];
+
+  // Mỗi named package = 1 dòng riêng với giá riêng.
+  // Lý do: cùng 1 khách có thể mua nhiều gói (vd "Post bài page" 100k + "Đăng bài trong group" 50k),
+  // mỗi gói có giá riêng ghi ở cột Số Tiền trên dòng nd tương ứng.
+
+  const isTaskDone = t => String(t.tiendo||'').trim() === 'Đã gửi khách' || !!t.checked;
+  const isSpacer = t => (
+    t.name === 'Task' &&
+    !String(t.tiendo||'').trim() &&
+    !(t.linkpage && t.linkpage.trim()) &&
+    !(t.tentruyen_row && t.tentruyen_row.trim()) &&
+    !(t.nguoilam && t.nguoilam.trim()) &&
+    !t.checked && !t.hasChk
+  );
+
+  allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(booking => {
+    const tenkhach = booking.tenkhach||'';
+
+    // Page Công chúa → luôn hoàn thành, tính booking.sotien
+    if(/^(page\s+)?c[oô]ng\s*ch[uú]a$/i.test(tenkhach.trim())) {
+      if(booking.sotien > 0) {
+        sentAmt += booking.sotien; sentCnt++;
+        detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet,
+          amt:booking.sotien, done:true, note:'Page Công chúa'});
+      }
+      return;
+    }
+
+    const namedPkgs = booking.packages.filter(p => p.name && p.name !== '—');
+
+    if(namedPkgs.length === 0) {
+      // Không có Nội Dung → kiểm tra tất cả tasks
+      const allTasks = booking.packages.flatMap(p=>p.tasks||[]).filter(t=>!isSpacer(t));
+      if(allTasks.length === 0 || booking.sotien <= 0) return;
+      const done = allTasks.every(isTaskDone);
+      const dCnt = allTasks.filter(isTaskDone).length;
+      if(done){sentAmt+=booking.sotien;sentCnt++;}else{pendAmt+=booking.sotien;pendCnt++;}
+      detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet,
+        amt:booking.sotien, done, note: done?'Đã gửi khách':'Chưa đủ tiến độ ('+dCnt+'/'+allTasks.length+')'});
+      return;
+    }
+
+    // Tính xem có package nào có sotien riêng không
+    const anyPkgAmt = namedPkgs.some(p => (p.sotien||0) > 0);
+
+    // Tổng giá booking = tổng các gói có giá (hoặc booking.sotien nếu không gói nào có giá riêng)
+    const bookingTotalAmt = anyPkgAmt
+      ? namedPkgs.reduce((s,p)=>s+(p.sotien||0),0)
+      : booking.sotien;
+
+    // Để tính đúng tài chính: tiền chỉ tính là "đã giao" khi TẤT CẢ gói trong booking đều xong.
+    // Gói 0k không chặn tài chính nhưng vẫn phải hoàn thành để tính booking done.
+    const namedPkgsWithTasks = namedPkgs.filter(p => (p.tasks||[]).length > 0);
+    const bookingAllDone = namedPkgsWithTasks.length > 0 &&
+      namedPkgsWithTasks.every(p => (p.tasks||[]).every(isTaskDone));
+
+    // Dùng flag để chỉ cộng tài chính 1 lần cho cả booking (tránh double-count)
+    let bookingFinCounted = false;
+
+    namedPkgs.forEach((pkg, idx) => {
+      // Xác định amount hiển thị cho package này:
+      // - Nếu pkg.sotien > 0 → dùng giá riêng
+      // - Nếu không gói nào có giá → gói đầu tiên dùng booking.sotien, các gói sau 0
+      // - Nếu có gói khác có giá nhưng gói này = 0 → hiện "—", KHÔNG skip
+      let amt;
+      if(anyPkgAmt) {
+        amt = pkg.sotien||0;
+      } else {
+        amt = (idx === 0) ? booking.sotien : 0;
+        // Không early-return ở đây — để gói chưa xong có amt=0 vẫn hiển thị ⏳
+      }
+
+      // Named package: dùng TẤT CẢ tasks — KHÔNG lọc isSpacer
+      const realTasks = pkg.tasks||[];
+      if(realTasks.length === 0) return;
+
+      const done = realTasks.every(isTaskDone);
+      // Gói đã xong và không có giá → bỏ qua (không ảnh hưởng tài chính, không cần hiển thị)
+      if(done && amt <= 0) return;
+
+      const dCnt = realTasks.filter(isTaskDone).length;
+      const uniqueTaskNames = [...new Set(
+        realTasks.map(t=>t.name)
+          .filter(n=>n&&n!=='Task'&&n.toLowerCase().trim()!==pkg.name.toLowerCase().trim())
+      )];
+      const taskSuffix = uniqueTaskNames.length > 0 ? ' ['+uniqueTaskNames.join('+')+']' : '';
+      const note = pkg.name + taskSuffix + ':' + dCnt + '/' + realTasks.length;
+
+      // Tài chính: chỉ tính cho gói CÓ GIÁ, và chỉ tính 1 lần cho cả booking
+      // dựa trên trạng thái TẤT CẢ gói (bookingAllDone), không chỉ gói này
+      if(amt > 0 && !bookingFinCounted) {
+        bookingFinCounted = true;
+        if(bookingAllDone){ sentAmt+=bookingTotalAmt; sentCnt++; }
+        else { pendAmt+=bookingTotalAmt; pendCnt++; }
+      }
+      detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet, amt, done, note});
+    });
+  });
+
+  // Render detail table
+  const tbody = document.getElementById('dlvDetailBody');
+  if(tbody) {
+    detailRows.sort((a,b)=>a.done-b.done || (a.tenkhach||'').localeCompare(b.tenkhach||''));
+    tbody.innerHTML = detailRows.map(r=>`
+      <tr style="border-bottom:1px solid var(--bd);background:${r.done?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'}">
+        <td style="padding:5px 8px">${r.tenkhach||'—'}</td>
+        <td style="padding:5px 8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.tentruyen||''}">${r.tentruyen||'(nội bộ)'}</td>
+        <td style="padding:5px 8px;color:var(--mu);font-size:11px">${r.sheet}</td>
+        <td style="padding:5px 8px;text-align:right;font-weight:600;color:${r.amt>0?'inherit':'var(--mu)'}">${r.amt>0?r.amt.toLocaleString()+'k':'—'}</td>
+        <td style="padding:5px 8px;text-align:center">${r.done?'✅':'⏳'}</td>
+        <td style="padding:5px 8px;color:var(--mu);font-size:11px">${r.note}</td>
+      </tr>`).join('');
+  }
+
+  // Phân bổ quỹ theo tỉ lệ doanh thu
+  const totalRev = sentAmt + pendAmt;
+  const pct = totalRev > 0 ? Math.round(sentAmt/totalRev*100) : 0;
+  const fundTotal = fund.total || 0;
+  const sentFund = totalRev > 0 ? Math.round(fundTotal * sentAmt / totalRev) : 0;
+  const pendFund = fundTotal - sentFund;
+
+  document.getElementById('dlvSentAmt').textContent = sentFund>0 ? sentFund.toLocaleString()+'k' : '0k';
+  document.getElementById('dlvSentCnt').textContent = sentCnt+' gói';
+  document.getElementById('dlvPendAmt').textContent = pendFund>0 ? pendFund.toLocaleString()+'k' : '0k';
+  document.getElementById('dlvPendCnt').textContent = pendCnt+' gói';
+  document.getElementById('dlvBar').style.width = pct+'%';
+  document.getElementById('dlvLegL').textContent = 'Hoàn thành '+pct+'%';
+  document.getElementById('dlvLegR').textContent = 'Chưa xong '+(100-pct)+'%';
+}
+
+// ═══ DAILY STATS ═══════════════════════════════════════
+function parseDate(v){
+  if(!v)return null;
+  if(v instanceof Date)return isNaN(v)?null:v;
+  // gviz returns dates as "Date(2026,3,15)" strings
+  const m=String(v).match(/Date\((\d+),(\d+),(\d+)\)/);
+  if(m)return new Date(+m[1],+m[2],+m[3]);
+  const d=new Date(v);
+  return isNaN(d)?null:d;
+}
+function toKey(d){
+  // YYYY-MM-DD local
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function setDRange(n){
+  dRange=n;
+  ['dr7','dr30','dr0'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.toggle('on',[7,30,0][i]===n);
+  });
+  renderDayStats();
+}
+function renderDayStats(){
+  const dayMap={};
+  allBookings.forEach(b=>{
+    const d=parseDate(b.ngayck);if(!d)return;
+    const key=toKey(d);
+    if(!dayMap[key])dayMap[key]={cc:0,pt:0,count:0,clients:[]};
+    if(b.page==='cc')dayMap[key].cc+=b.sotien||0;
+    else dayMap[key].pt+=b.sotien||0;
+    dayMap[key].count++;
+    dayMap[key].clients.push(b.tenkhach);
+  });
+  let dates=Object.keys(dayMap).sort();
+  if(dRange>0){
+    const cut=new Date();cut.setDate(cut.getDate()-dRange);
+    const cutKey=toKey(cut);
+    dates=dates.filter(d=>d>=cutKey);
+  }
+  // Chart
+  const gc='rgba(0,0,0,0.05)',tc='#aaa';
+  const labels=dates.map(d=>{const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'});});
+  dayChart.data.labels=labels;
+  dayChart.data.datasets[0].data=dates.map(d=>dayMap[d].cc);
+  dayChart.data.datasets[1].data=dates.map(d=>dayMap[d].pt);
+  dayChart.update('active');
+  // Table — newest first
+  if(!dates.length){
+    document.getElementById('dayTbl').innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--mu)">Không có dữ liệu trong khoảng thời gian này</td></tr>';
+    return;
+  }
+  document.getElementById('dayTbl').innerHTML=[...dates].reverse().map(key=>{
+    const r=dayMap[key];
+    const dt=new Date(key+'T00:00:00');
+    const label=dt.toLocaleDateString('vi-VN',{weekday:'short',day:'2-digit',month:'2-digit',year:'2-digit'});
+    const total=r.cc+r.pt;
+    const today=toKey(new Date());
+    const isToday=key===today;
+    return`<tr style="${isToday?'background:var(--dn-bg)':''}">
+      <td>${label}${isToday?' <span style="font-size:10px;font-weight:700;color:var(--dn)">HÔM NAY</span>':''}</td>
+      <td style="color:var(--cc)">${r.cc>0?r.cc.toLocaleString()+'k':'—'}</td>
+      <td style="color:var(--pt)">${r.pt>0?r.pt.toLocaleString()+'k':'—'}</td>
+      <td style="font-weight:700">${total.toLocaleString()}k</td>
+      <td style="color:var(--mu)">${r.count} booking</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══ TOP CLIENTS ════════════════════════════════════════
+const TOP_CLIENTS=[
+  {name:'Phương Uyên',val:7096},{name:'Sao Hoả',val:3320},
+  {name:'Đặng Thế Duy',val:3224},{name:'Luong Le',val:2387},
+  {name:'潇湘',val:1729},{name:'Mỹ Hà',val:1706},
+  {name:'Ayako',val:1600},{name:'Lunette',val:1550},
+];
+function renderTopClients(){
+  const max=Math.max(...TOP_CLIENTS.map(c=>c.val));
+  document.getElementById('topClients').innerHTML=TOP_CLIENTS.map((c,i)=>`<tr>
+    <td style="color:var(--mu)">${i+1}</td>
+    <td style="font-weight:600">${c.name}</td>
+    <td style="text-align:right;font-weight:700">${c.val.toLocaleString()}k</td>
+    <td><div style="display:flex;align-items:center"><div class="bar-bg"><div class="bar-fill" style="width:${Math.round(c.val/max*100)}%"></div></div></div></td>
+  </tr>`).join('');
+}
+
+// ═══ BOOKINGS ═══════════════════════════════════════════
+function populateMoFilter(){
+  const mos=[...new Set(allBookings.map(b=>b.month).filter(Boolean))];
+  const sel=document.getElementById('fMo');const cur=sel.value;
+  sel.innerHTML='<option value="">Tất cả tháng</option>'+mos.map(m=>`<option${m===cur?' selected':''}>${m}</option>`).join('');
+}
+
+function filterB(){
+  const pg=document.getElementById('fPg').value;
+  const mo=document.getElementById('fMo').value;
+  const st=document.getElementById('fSt').value;
+  const sr=document.getElementById('fSr').value.toLowerCase().trim();
+  filtBookings=allBookings.filter(b=>{
+    if(pg&&b.page!==pg)return false;
+    if(mo&&b.month!==mo)return false;
+    if(st&&b.status!==st)return false;
+    if(sr&&!b.tenkhach.toLowerCase().includes(sr))return false;
+    return true;
+  });
+  document.getElementById('bkTot').textContent=filtBookings.length;
+  document.getElementById('bkPend').textContent=filtBookings.filter(b=>b.status==='pend').length;
+  document.getElementById('bkDo').textContent=filtBookings.filter(b=>b.status==='do').length;
+  document.getElementById('bkDn').textContent=filtBookings.filter(b=>b.status==='dn').length;
+  document.getElementById('bCnt').textContent=filtBookings.length+(filtBookings.length!==allBookings.length?' / '+allBookings.length+' tổng':'')+' booking';
+  populateMoFilter();
+  renderBookings();
+}
+
+function clearBF(){document.getElementById('fPg').value='';document.getElementById('fMo').value='';document.getElementById('fSt').value='';document.getElementById('fSr').value='';filterB();}
+
+function renderBookings(){
+  const cont=document.getElementById('bookingList');
+  if(!filtBookings.length){cont.innerHTML='<div class="empty">Không có booking nào phù hợp</div>';return;}
+  cont.innerHTML=filtBookings.map(b=>{
+    const pgBadge=b.page==='pt'?'<span class="bdg bdg-pt">Phù thuỷ</span>':'<span class="bdg bdg-cc">Công chúa</span>';
+    const overallSt=`<span class="stpill ${b.status}">${stLbl(b.status)}</span>`;
+    const progPct=b.totalTasks>0?`${b.doneTasks}/${b.totalTasks} task`:'—';
+    const packagesHtml=b.packages.map(p=>{
+      const pClr=p.status==='dn'?'var(--dn)':p.status==='do'?'var(--do)':'var(--pend)';
+      const barCls=p.status==='dn'?'prog-dn':p.status==='do'?'prog-do':'prog-pend';
+      const tasksHtml=p.tasks.map(t=>{
+        const tst=t.status||'pend';
+        const nameCls=tst==='dn'?'task-name done-txt':'task-name';
+        const stLabels={pend:'Chưa làm',do:'Đang làm',dn:'Xong'};
+        const tdDisplay=(t.tiendo&&typeof t.tiendo==='string'&&t.tiendo.trim())?t.tiendo:stLabels[tst];
+        const linkHtml=t.linkpage?`<a href="${t.linkpage}" target="_blank" class="task-link">[link]</a>`:'';
+        const whoHtml=t.nguoilam?`<span class="task-who">${t.nguoilam}</span>`:'';
+        return`<div class="task-row">
+          <span class="task-st task-st-${tst}" onclick="cycleTask('${b._id}','${p._id}','${t._id}')" title="Click để đổi trạng thái">${tdDisplay}</span>
+          <span class="${nameCls}">${t.name}</span>
+          ${whoHtml}${linkHtml}
+        </div>`;
+      }).join('');
+      return`<div class="pkg">
+        <div class="pkg-hdr">
+          <span class="pkg-name">${p.name}</span>
+          <div class="pkg-prog-wrap"><div class="pkg-prog-bar ${barCls}" style="width:${p.progress}%"></div></div>
+          <span class="pkg-stat" style="color:${pClr}">${p.doneCount}/${p.total} ${stLbl(p.status)}</span>
+        </div>
+        ${tasksHtml}
+      </div>`;
+    }).join('');
+    return`<div class="bcard" id="bc_${b._id}">
+      <div class="bcard-hdr" onclick="toggleCard('${b._id}')">
+        ${pgBadge}
+        <div class="binfo">
+          <div class="bclient">${b.tenkhach}</div>
+          <div class="bstory">${b.tentruyen||'—'}</div>
+        </div>
+        <div class="bmeta">
+          ${overallSt}
+          <span class="bdate" style="margin:0 6px">${fmtD(b.ngayck)}</span>
+          <span class="bamt">${fmtM(b.sotien)}</span>
+        </div>
+        <svg class="bchevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="bcard-body">${packagesHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCard(id){
+  const el=document.getElementById('bc_'+id);
+  if(el)el.classList.toggle('open');
+}
+
+async function cycleTask(bookingId,pkgId,taskId){
+  const b=allBookings.find(x=>x._id===bookingId);if(!b)return;
+  const p=b.packages.find(x=>x._id===pkgId);if(!p)return;
+  const t=p.tasks.find(x=>x._id===taskId);if(!t)return;
+  // Cycle: pend → do → dn → pend
+  const cycle={pend:'do',do:'dn',dn:'pend'};
+  const valMap={pend:'',do:'Đang làm',dn:'Xong'};
+  t.status=cycle[t.status||'pend'];
+  t.done=t.status==='dn';
+  t.tiendo=valMap[t.status];
+  // Recalc package
+  p.doneCount=p.tasks.filter(x=>x.status==='dn').length;
+  p.doCount=p.tasks.filter(x=>x.status==='do').length;
+  p.progress=p.total>0?Math.round(p.doneCount/p.total*100):0;
+  p.status=p.total>0&&p.doneCount===p.total?'dn':p.doneCount>0||p.doCount>0?'do':'pend';
+  // Recalc booking
+  const tot=b.packages.reduce((s,x)=>s+x.total,0);
+  const dn=b.packages.reduce((s,x)=>s+x.doneCount,0);
+  const doing=b.packages.reduce((s,x)=>s+(x.doCount||0),0);
+  b.doneTasks=dn;b.progress=tot>0?Math.round(dn/tot*100):0;
+  b.status=tot>0&&dn===tot?'dn':dn>0||doing>0?'do':'pend';
+  // Sync to Apps Script
+  if(AU){try{await asCall({action:'update',_sheet:t._sheet,_row:t._row,tiendo:t.tiendo});}catch(e){}}
+  filterB();
+  setTimeout(()=>{const el=document.getElementById('bc_'+bookingId);if(el&&!el.classList.contains('open'))el.classList.add('open');},10);
+}
+
+// ═══ POLICY ════════════════════════════════════════════
+function renderPolicy(){
+  const cont=document.getElementById('polContent');
+  if(!policyData.length){cont.innerHTML='<div class="empty">Không có dữ liệu chính sách</div>';return;}
+  cont.innerHTML=`<div class="pol-grid">${policyData.map(p=>`
+    <div class="pol-card">
+      <div class="pol-card-top">
+        <div class="pol-name">${p.ten||'—'}</div>
+        ${p.gia?`<div class="pol-price">${p.gia}</div>`:''}
+      </div>
+      <div class="pol-card-body">
+        ${p.noidung?`<div class="pol-desc">${p.noidung.replace(/\n/g,'<br>')}</div>`:''}
+        ${p.ghichu?`<div class="pol-note">${p.ghichu.replace(/\n/g,'<br>')}</div>`:''}
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ═══ TAB SWITCH ════════════════════════════════════════
+function switchTab(t){
+  curTab=t;
+  ['dash','task','policy'].forEach(id=>{
+    document.getElementById('tab'+id.charAt(0).toUpperCase()+id.slice(1)).classList.toggle('on',id===t);
+  });
+  document.querySelectorAll('.tab').forEach((el,i)=>{
+    el.classList.toggle('on',['dash','task','policy'][i]===t);
+  });
+  ['Dash','Task','Policy'].forEach(id=>{
+    const el=document.getElementById('tab'+id);
+    if(el)el.classList.toggle('on',id.toLowerCase()===t);
+  });
+  if(t==='policy'&&!polLoaded){renderPolicy();polLoaded=true;}
+}
+
+// ═══ CHARTS INIT ═══════════════════════════════════════
+function initCharts(){
+  const gc='rgba(0,0,0,0.05)',tc='#aaa';
+  barChart=new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{labels:MONTHS,datasets:[
+      {label:'Công chúa',data:[...ccRev],backgroundColor:'#c44a72',borderRadius:4,stack:'s'},
+      {label:'Phù thuỷ',data:[...ptRev],backgroundColor:'#2d7dd2',borderRadius:4,stack:'s'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString()}k`}}},
+      scales:{x:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{stacked:true,ticks:{color:tc,font:{size:11},callback:v=>v.toLocaleString()+'k'},grid:{color:gc}}}}
+  });
+  donutChart=new Chart(document.getElementById('donutChart'),{
+    type:'doughnut',
+    data:{labels:['Công chúa','Phù thuỷ'],datasets:[{data:[1,0],backgroundColor:['#c44a72','#2d7dd2'],borderWidth:0,hoverOffset:5}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed.toLocaleString()}k`}}},cutout:'62%'}
+  });
+  dayChart=new Chart(document.getElementById('dayChart'),{
+    type:'bar',
+    data:{labels:[],datasets:[
+      {label:'Công chúa',data:[],backgroundColor:'#c44a72cc',borderRadius:3,stack:'s'},
+      {label:'Phù thuỷ', data:[],backgroundColor:'#2d7dd2cc',borderRadius:3,stack:'s'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString()}k`}}},
+      scales:{
+        x:{stacked:true,ticks:{color:tc,font:{size:10},maxRotation:45},grid:{color:gc}},
+        y:{stacked:true,ticks:{color:tc,font:{size:11},callback:v=>v.toLocaleString()+'k'},grid:{color:gc}}
+      }
+    }
+  });
+}
+
+// ═══ SETUP MODAL ═══════════════════════════════════════
+const ASC=`// Paste vào Extensions → Apps Script của Google Sheets
+// Deploy → New deployment → Web app
+// Execute as: Me | Who has access: Anyone
+
+const SHEET_ID = '1ymBQnlD3_3cHj6QFrQ4mmiebR1bzAnP5';
+const COLS = ['Ngày ck','Tên Khách','Tên Truyện','Link file ','Nội Dung',
+  'Hạng mục','Link page/tiktok','Người làm',
+  'Note (tiktok tick khi đủ 100 tim, còn lại tick khi hoàn thành)',
+  'Tiến độ','Số Tiền','Tổng'];
+
+function sheetName(page, date) {
+  const d = date ? new Date(date) : new Date();
+  return (page==='pt'?'Phù thuỷ T':'Công chúa T')+(d.getMonth()+1)+'-'+d.getFullYear();
+}
+
+function doGet(e) {
+  const p = e.parameter, cb = p.callback;
+  let result;
+  try {
+    if (!p.action || p.action==='ping') result = { status:'ok', message:'connected' };
+    else if (p.action==='read') result = { status:'ok', tasks: readAll() };
+    else if (p.action==='update') result = updateRow(p);
+    else if (p.action==='add') result = addRow(p);
+    else if (p.action==='delete') result = deleteRow(p);
+  } catch(err) { result = { status:'error', msg: err.toString() }; }
+  const json = JSON.stringify(result);
+  return ContentService.createTextOutput(cb ? cb+'('+json+')' : json)
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
+}
+
+function readAll() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const skip = ['Gói + Chính Sách','Chính Sách Referral'];
+  const tasks = [];
+  ss.getSheets().forEach(function(sh) {
+    const name = sh.getName();
+    if (skip.includes(name)) return;
+    const page = name.includes('Phù thu') ? 'pt' : 'cc';
+    const vals = sh.getDataRange().getValues();
+    if (vals.length < 2) return;
+    const hdr = vals[0];
+    for (let i = 1; i < vals.length; i++) {
+      if (!vals[i][1]) continue;
+      const t = { _sheet: name, _row: i+1, page: page };
+      hdr.forEach(function(h,j){ t[h] = vals[i][j] instanceof Date ? vals[i][j].toISOString() : vals[i][j]; });
+      tasks.push(t);
+    }
+  });
+  return tasks;
+}
+
+function addRow(p) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  let sh = ss.getSheetByName(sheetName(p.page, p.ngayck));
+  if (!sh) { sh = ss.insertSheet(sheetName(p.page, p.ngayck)); sh.appendRow(COLS); }
+  sh.appendRow([p.ngayck?new Date(p.ngayck):'',p.tenkhach||'',p.tentruyen||'',
+    p.linkfile||'',p.noidung||'',p.hangmuc||'',p.linkpage||'',p.nguoilam||'',
+    p.note||'',parseFloat(p.tiendo)||0,parseFloat(p.sotien)||0,'']);
+  return { status:'ok' };
+}
+
+function updateRow(p) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName(p._sheet);
+  if (!sh) return { status:'error', msg:'sheet not found' };
+  const row = parseInt(p._row);
+  const hdr = sh.getRange(1,1,1,sh.getLastColumn()).getValues()[0];
+  const map = { tenkhach:'Tên Khách', tentruyen:'Tên Truyện', linkfile:'Link file ',
+    noidung:'Nội Dung', hangmuc:'Hạng mục', linkpage:'Link page/tiktok',
+    nguoilam:'Người làm', tiendo:'Tiến độ', sotien:'Số Tiền', ngayck:'Ngày ck' };
+  Object.keys(map).forEach(function(k) {
+    if (p[k]===undefined) return;
+    const col = hdr.indexOf(map[k])+1; if (!col) return;
+    let v = p[k];
+    if (k==='ngayck'&&v) v=new Date(v);
+    if (k==='tiendo'||k==='sotien') v=parseFloat(v)||0;
+    sh.getRange(row,col).setValue(v);
+  });
+  return { status:'ok' };
+}
+
+function deleteRow(p) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName(p._sheet);
+  if (!sh) return { status:'error' };
+  sh.deleteRow(parseInt(p._row));
+  return { status:'ok' };
+}`;
+
+function openSetup(){document.getElementById('aUrl').value=AU;document.getElementById('ascCode').textContent=ASC;document.getElementById('testRes').innerHTML='';document.getElementById('setupOverlay').style.display='flex';}
+function closeSetup(){document.getElementById('setupOverlay').style.display='none';}
+function saveSetup(){AU=document.getElementById('aUrl').value.trim();localStorage.setItem('bkAU',AU);closeSetup();loadAll();}
+function cpCode(){navigator.clipboard.writeText(ASC).then(()=>alert('Đã copy code Apps Script!'));}
+async function testConn(){
+  const url=document.getElementById('aUrl').value.trim();const div=document.getElementById('testRes');
+  if(!url){div.innerHTML='<span style="color:var(--red)">Nhập URL trước</span>';return;}
+  div.innerHTML='Đang kiểm tra...';const tmp=AU;AU=url;
+  try{const r=await asCall({action:'ping'});if(r&&r.status==='ok')div.innerHTML='<span style="color:var(--dn);font-weight:600">✓ Kết nối thành công!</span>';else throw new Error();}
+  catch(e){div.innerHTML='<span style="color:var(--red)">Kết nối thất bại. Kiểm tra URL và cài đặt deploy.</span>';AU=tmp;}
+}
+
+// ═══ INIT ══════════════════════════════════════════════
+initCharts();
+loadAll();
+</script>
+</body>
+</html>
