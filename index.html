@@ -377,18 +377,66 @@ pre.code{background:#f0f0ea;padding:12px;border-radius:8px;font-size:11px;overfl
 const SID = '1Ha4o05fe9YuNRpfoO5HgvmdfaULxwqI9a-2UyDSc5rU';
 let AU = localStorage.getItem('bkAU') || '';
 
-const BSHEETS = [
-  {name:'Tháng 11-2025',page:'cc',mo:'T11/25',mi:0},
-  {name:'Tháng 12-2025',page:'cc',mo:'T12/25',mi:1},
-  {name:'Tháng 1-2026', page:'cc',mo:'T1/26', mi:2},
-  {name:'Tháng 2-2026', page:'cc',mo:'T2/26', mi:3},
-  {name:'Tháng 3-2026', page:'cc',mo:'T3/26', mi:4},
-  {name:'Tháng 4-2026', page:'cc',mo:'T4/26', mi:5},
-  {name:'Phù thuỷ T4-2026',page:'pt',mo:'T4/26',mi:5},
-  {name:'Công chúa T5-2026',page:'cc',mo:'T5/26',mi:6},
-];
-const MONTHS = ['T11/25','T12/25','T1/26','T2/26','T3/26','T4/26','T5/26'];
+// BSHEETS & MONTHS được build động sau khi fetch danh sách sheet
+let BSHEETS = [];
+let MONTHS  = [];
+let DELIVERY_SHEETS = new Set();
 const POLICY_SHEET = 'Gói + Chính Sách';
+
+// Phân tích tên sheet thành {name, page, mo, mi}
+// mi = số tháng kể từ T11/2025 (mi=0)
+function parseSheetEntry(name) {
+  let m, y, page;
+  let match = name.match(/Tháng\s+(\d+)-(\d{4})/);
+  if (match) { m=+match[1]; y=+match[2]; page='cc'; }
+  if (!match) {
+    match = name.match(/Công\s*ch[uú]a\s+T(\d+)-(\d{4})/i);
+    if (match) { m=+match[1]; y=+match[2]; page='cc'; }
+  }
+  if (!match) {
+    match = name.match(/Phù\s+thu[ỷỹ]\s+T(\d+)-(\d{4})/i);
+    if (match) { m=+match[1]; y=+match[2]; page='pt'; }
+  }
+  if (!match) return null;
+  const mi = (y - 2025) * 12 + (m - 11); // T11/25=0, T12/25=1, T1/26=2 ...
+  if (mi < 0) return null;
+  const mo = `T${m}/${String(y).slice(2)}`;
+  return {name, page, mo, mi};
+}
+
+// Fetch danh sách sheet từ Google Sheets feeds API (public)
+async function fetchAndBuildSheets() {
+  let sheetNames = null;
+  try {
+    const url = `https://spreadsheets.google.com/feeds/worksheets/${SID}/public/basic?alt=json`;
+    const res = await fetch(url, {cache:'no-store'});
+    if (res.ok) {
+      const data = await res.json();
+      sheetNames = data.feed.entry.map(e => e.title.$t);
+    }
+  } catch(e) {}
+
+  // Fallback nếu fetch thất bại
+  if (!sheetNames) {
+    sheetNames = [
+      'Tháng 11-2025','Tháng 12-2025','Tháng 1-2026','Tháng 2-2026',
+      'Tháng 3-2026','Tháng 4-2026','Phù thuỷ T4-2026',
+      'Phù thuỷ T5-2026','Công chúa T5-2026'
+    ];
+  }
+
+  BSHEETS = sheetNames.map(parseSheetEntry).filter(Boolean);
+  BSHEETS.sort((a,b) => a.mi - b.mi || (a.page==='cc'?0:1) - (b.page==='cc'?0:1));
+
+  // Build MONTHS: mỗi mi duy nhất → một label tháng
+  const moMap = new Map();
+  BSHEETS.forEach(s => { if (!moMap.has(s.mi)) moMap.set(s.mi, s.mo); });
+  MONTHS = [...moMap.entries()].sort((a,b)=>a[0]-b[0]).map(([,mo])=>mo);
+
+  // DELIVERY_SHEETS: tự động lấy 2 tháng gần nhất
+  const maxMi = BSHEETS.length ? Math.max(...BSHEETS.map(s=>s.mi)) : 0;
+  DELIVERY_SHEETS = new Set(BSHEETS.filter(s => s.mi >= maxMi - 1).map(s => s.name));
+}
 
 // ═══ STATE ═════════════════════════════════════════════
 let ccRev   = new Array(MONTHS.length).fill(0);
@@ -646,10 +694,15 @@ function parsePolicyCols(table) {
 async function loadAll() {
   const ic=document.getElementById('rIcon');ic.classList.add('spin');
   document.getElementById('liveTag').style.display='none';
-  ccRev  =new Array(MONTHS.length).fill(0);
-  ptRev  =new Array(MONTHS.length).fill(0);
-  ccFunds=new Array(MONTHS.length).fill(0);
-  ptFunds=new Array(MONTHS.length).fill(0);
+
+  // Fetch danh sách sheet động từ Google Sheets
+  await fetchAndBuildSheets();
+
+  const arrLen = MONTHS.length || 1;
+  ccRev  =new Array(arrLen).fill(0);
+  ptRev  =new Array(arrLen).fill(0);
+  ccFunds=new Array(arrLen).fill(0);
+  ptFunds=new Array(arrLen).fill(0);
   allBookings=[];
   allExpenses=[];
   BSHEETS.forEach(s=>{sheetSt[s.name]='ld'});
@@ -698,7 +751,7 @@ function updateDashboard(){
   const latestTotal=ccRev[ccLi]+ptRev[ptLi];
   const latestLabel=ccLi===ptLi?MONTHS[ccLi]+' (2 page)':'CC '+MONTHS[ccLi]+' + PT '+MONTHS[ptLi];
   document.getElementById('dTotal').textContent=grand.toLocaleString()+'k';
-  document.getElementById('dTotalSb').textContent='T11/2025 – T5/2026';
+  document.getElementById('dTotalSb').textContent=MONTHS.length>1?MONTHS[0]+' – '+MONTHS[MONTHS.length-1]:'';
   document.getElementById('dCur').textContent=latestTotal.toLocaleString()+'k';
   document.getElementById('dCurSb').textContent=latestLabel;
   document.getElementById('dCC').textContent=totalCC.toLocaleString()+'k';
@@ -706,6 +759,7 @@ function updateDashboard(){
   const pcc=grand>0?Math.round(totalCC/grand*100):0;
   document.getElementById('pctCC').textContent=pcc+'%';
   document.getElementById('pctPT').textContent=(100-pcc)+'%';
+  barChart.data.labels=[...MONTHS];
   barChart.data.datasets[0].data=[...ccRev];
   barChart.data.datasets[1].data=[...ptRev];
   barChart.update('active');
@@ -778,8 +832,7 @@ function renderSheetGrid(){
 }
 
 // ═══ DELIVERY STATS ════════════════════════════════════
-// Chỉ tính 3 sheet hiện tại (T4 CC, T4 PT, T5 CC) — các sheet cũ đã hoàn thành hết
-const DELIVERY_SHEETS = new Set(['Tháng 4-2026','Phù thuỷ T4-2026','Công chúa T5-2026']);
+// DELIVERY_SHEETS được tự động tính trong fetchAndBuildSheets() — 2 tháng gần nhất
 
 function renderDeliveryStats() {
   const fund = calcFund();
