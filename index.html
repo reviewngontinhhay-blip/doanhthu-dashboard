@@ -771,21 +771,31 @@ function updateDashboard(){
 }
 
 function calcFund() {
-  // Lấy giá trị cột Tổng (quỹ tích lũy) mới nhất ≠ 0 của từng page
+  // Label: dùng sheet mới nhất đã load được cho từng page
+  // Value: dùng Tổng của sheet đó; nếu = 0, fallback về tháng trước gần nhất có giá trị
+  const okCC = BSHEETS.filter(s=>s.page==='cc'&&sheetSt[s.name]==='ok');
+  const okPT = BSHEETS.filter(s=>s.page==='pt'&&sheetSt[s.name]==='ok');
+
   let ccFund=0, ccSheet='', ptFund=0, ptSheet='';
-  for(let i=MONTHS.length-1;i>=0;i--){
-    if(ccFund===0&&ccFunds[i]>0){
-      ccFund=ccFunds[i];
-      const s=BSHEETS.filter(x=>x.page==='cc'&&x.mi===i);
-      ccSheet=s.length?s[s.length-1].mo:'';
+
+  if(okCC.length){
+    const latest=okCC.reduce((a,b)=>a.mi>=b.mi?a:b);
+    ccSheet=latest.mo;
+    ccFund=ccFunds[latest.mi];
+    if(ccFund===0){
+      for(let i=latest.mi-1;i>=0;i--){if(ccFunds[i]>0){ccFund=ccFunds[i];break;}}
     }
-    if(ptFund===0&&ptFunds[i]>0){
-      ptFund=ptFunds[i];
-      const s=BSHEETS.filter(x=>x.page==='pt'&&x.mi===i);
-      ptSheet=s.length?s[s.length-1].mo:'';
-    }
-    if(ccFund>0&&ptFund>0)break;
   }
+
+  if(okPT.length){
+    const latest=okPT.reduce((a,b)=>a.mi>=b.mi?a:b);
+    ptSheet=latest.mo;
+    ptFund=ptFunds[latest.mi];
+    if(ptFund===0){
+      for(let i=latest.mi-1;i>=0;i--){if(ptFunds[i]>0){ptFund=ptFunds[i];break;}}
+    }
+  }
+
   return{cc:ccFund,ccSheet,pt:ptFund,ptSheet,total:ccFund+ptFund};
 }
 
@@ -853,8 +863,36 @@ function renderDeliveryStats() {
     !t.checked && !t.hasChk
   );
 
+  // Pre-compute 1: mi cao nhất per (tenkhach|tentruyen) → dùng để skip sheet cũ
+  const latestMiForKey = new Map();
+  allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(b => {
+    const key = (b.tenkhach||'') + '|' + (b.tentruyen||'');
+    const mi = BSHEETS.find(s=>s.name===b._sheet)?.mi ?? -1;
+    if (mi > (latestMiForKey.get(key) ?? -1)) latestMiForKey.set(key, mi);
+  });
+
+  // Pre-compute 2: phí tốt nhất per (tenkhach|tentruyen|pkgname) và per (tenkhach|tentruyen) booking-level
+  // → khi sheet mới có phí = 0, fallback về sheet cũ có phí > 0
+  const bestPkgAmt  = new Map(); // key = bKey+'|'+pkgName
+  const bestBkAmt   = new Map(); // key = bKey (booking-level sotien)
+  allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(b => {
+    const bk = (b.tenkhach||'') + '|' + (b.tentruyen||'');
+    if ((b.sotien||0) > (bestBkAmt.get(bk)??0)) bestBkAmt.set(bk, b.sotien);
+    (b.packages||[]).forEach(pkg => {
+      if ((pkg.sotien||0) > 0) {
+        const pk = bk + '|' + (pkg.name||'');
+        if (pkg.sotien > (bestPkgAmt.get(pk)??0)) bestPkgAmt.set(pk, pkg.sotien);
+      }
+    });
+  });
+
   allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(booking => {
     const tenkhach = booking.tenkhach||'';
+
+    // Bỏ qua nếu cùng khách+truyện có entry từ sheet mới hơn
+    const bKey = tenkhach + '|' + (booking.tentruyen||'');
+    const bMi = BSHEETS.find(s=>s.name===booking._sheet)?.mi ?? -1;
+    if (bMi < (latestMiForKey.get(bKey) ?? -1)) return;
 
     // Page Công chúa → luôn hoàn thành, tính booking.sotien
     if(/^(page\s+)?c[oô]ng\s*ch[uú]a$/i.test(tenkhach.trim())) {
@@ -880,13 +918,20 @@ function renderDeliveryStats() {
       return;
     }
 
-    // Tính xem có package nào có sotien riêng không
-    const anyPkgAmt = namedPkgs.some(p => (p.sotien||0) > 0);
+    // Tính xem có package nào có sotien riêng không (kể cả fallback từ sheet cũ)
+    const anyPkgAmt = namedPkgs.some(p => {
+      const pk = bKey + '|' + (p.name||'');
+      return (p.sotien||0) > 0 || (bestPkgAmt.get(pk)||0) > 0;
+    });
 
-    // Tổng giá booking = tổng các gói có giá (hoặc booking.sotien nếu không gói nào có giá riêng)
+    // Tổng giá booking = tổng gói có giá (kể cả fallback), hoặc booking.sotien / bestBkAmt
+    const effectiveBkAmt = booking.sotien > 0 ? booking.sotien : (bestBkAmt.get(bKey)||0);
     const bookingTotalAmt = anyPkgAmt
-      ? namedPkgs.reduce((s,p)=>s+(p.sotien||0),0)
-      : booking.sotien;
+      ? namedPkgs.reduce((s,p) => {
+          const pk = bKey + '|' + (p.name||'');
+          return s + ((p.sotien||0) > 0 ? p.sotien : (bestPkgAmt.get(pk)||0));
+        }, 0)
+      : effectiveBkAmt;
 
     // Để tính đúng tài chính: tiền chỉ tính là "đã giao" khi TẤT CẢ gói trong booking đều xong.
     // Gói 0k không chặn tài chính nhưng vẫn phải hoàn thành để tính booking done.
@@ -904,9 +949,11 @@ function renderDeliveryStats() {
       // - Nếu có gói khác có giá nhưng gói này = 0 → hiện "—", KHÔNG skip
       let amt;
       if(anyPkgAmt) {
-        amt = pkg.sotien||0;
+        // Dùng giá riêng của gói; fallback về sheet cũ nếu gói này chưa có giá
+        const pk = bKey + '|' + (pkg.name||'');
+        amt = (pkg.sotien||0) > 0 ? pkg.sotien : (bestPkgAmt.get(pk)||0);
       } else {
-        amt = (idx === 0) ? booking.sotien : 0;
+        amt = (idx === 0) ? effectiveBkAmt : 0;
         // Không early-return ở đây — để gói chưa xong có amt=0 vẫn hiển thị ⏳
       }
 
