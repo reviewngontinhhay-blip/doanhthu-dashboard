@@ -980,15 +980,25 @@ function renderDeliveryStats() {
         if(bookingAllDone){ sentAmt+=bookingTotalAmt; sentCnt++; }
         else { pendAmt+=bookingTotalAmt; pendCnt++; }
       }
-      detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet, amt, done, note});
+      // done ở đây = trạng thái của từng package riêng lẻ (dùng cho note)
+      // bookingDone = toàn bộ booking xong hay chưa (dùng cho icon ✅/⏳ và sort)
+      detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet, amt, done:bookingAllDone, pkgDone:done, note});
     });
   });
+
+  // Deduplicate: cùng (tenkhach|tentruyen|note) → chỉ giữ 1 dòng (gviz đôi khi tạo 2 booking cho cùng 1 entry)
+  const dedupMap = new Map();
+  detailRows.forEach(r => {
+    const k = (r.tenkhach||'')+'|'+(r.tentruyen||'')+'|'+(r.note||'');
+    if (!dedupMap.has(k)) dedupMap.set(k, r);
+  });
+  const finalRows = [...dedupMap.values()];
 
   // Render detail table
   const tbody = document.getElementById('dlvDetailBody');
   if(tbody) {
-    detailRows.sort((a,b)=>a.done-b.done || (a.tenkhach||'').localeCompare(b.tenkhach||''));
-    tbody.innerHTML = detailRows.map(r=>`
+    finalRows.sort((a,b)=>a.done-b.done || (a.tenkhach||'').localeCompare(b.tenkhach||''));
+    tbody.innerHTML = finalRows.map(r=>`
       <tr style="border-bottom:1px solid var(--bd);background:${r.done?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'}">
         <td style="padding:5px 8px">${r.tenkhach||'—'}</td>
         <td style="padding:5px 8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.tentruyen||''}">${r.tentruyen||'(nội bộ)'}</td>
