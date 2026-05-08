@@ -454,6 +454,17 @@ let dRange = 7;
 let allExpenses = [];
 
 // ═══ HELPERS ══════════════════════════════════════════
+// Chuẩn hoá key để dedup: bỏ dấu tiếng Việt, bỏ nội dung trong ngoặc () và [],
+// chỉ giữ chữ/số, lowercase — giống Apps Script sendDailyPendingReport
+function normKey(text) {
+  return String(text||'')
+    .normalize('NFD')
+    .replace(/[̀-ͯ᷀-᷿⃐-⃿]/g, '')
+    .replace(/[\(\（][^\)\）]*[\)\）]/g, '')
+    .replace(/\[[^\]]*\]/g, '')
+    .replace(/[^a-z0-9]/gi, '')
+    .toLowerCase();
+}
 const uid = () => '_' + Math.random().toString(36).substr(2,9);
 const isDone = v => {
   if(!v&&v!==0)return false;
@@ -982,15 +993,24 @@ function renderDeliveryStats() {
       }
       // done ở đây = trạng thái của từng package riêng lẻ (dùng cho note)
       // bookingDone = toàn bộ booking xong hay chưa (dùng cho icon ✅/⏳ và sort)
-      detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet, amt, done:bookingAllDone, pkgDone:done, note});
+      detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet, amt, done:bookingAllDone, pkgDone:done, note, pkgname:pkg.name||''});
     });
   });
 
-  // Deduplicate: cùng (tenkhach|tentruyen|note) → chỉ giữ 1 dòng (gviz đôi khi tạo 2 booking cho cùng 1 entry)
+  // Deduplicate: cùng normKey(tenkhach|tentruyen|pkgname) → chỉ giữ 1 dòng
+  // Dùng normKey (bỏ dấu, bỏ nội dung ngoặc) để catch duplicate dù task count khác nhau
+  // Khi trùng: ưu tiên dòng có nhiều thông tin hơn (done, hoặc amt > 0)
   const dedupMap = new Map();
   detailRows.forEach(r => {
-    const k = (r.tenkhach||'')+'|'+(r.tentruyen||'')+'|'+(r.note||'');
-    if (!dedupMap.has(k)) dedupMap.set(k, r);
+    const k = normKey(r.tenkhach)+'|'+normKey(r.tentruyen)+'|'+normKey(r.pkgname);
+    const existing = dedupMap.get(k);
+    if (!existing) {
+      dedupMap.set(k, r);
+    } else {
+      // Giữ dòng có amt > 0 (nếu một trong 2 có phí), hoặc dòng done=false (chưa xong quan trọng hơn)
+      const keepNew = (r.amt > 0 && existing.amt <= 0) || (!r.done && existing.done);
+      if (keepNew) dedupMap.set(k, r);
+    }
   });
   const finalRows = [...dedupMap.values()];
 
