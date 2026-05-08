@@ -1036,9 +1036,9 @@ function renderDeliveryStats() {
   const sentFund = totalRev > 0 ? Math.round(fundTotal * sentAmt / totalRev) : 0;
   const pendFund = fundTotal - sentFund;
 
-  document.getElementById('dlvSentAmt').textContent = sentFund>0 ? sentFund.toLocaleString()+'k' : '0k';
+  document.getElementById('dlvSentAmt').textContent = sentAmt>0 ? sentAmt.toLocaleString()+'k' : '0k';
   document.getElementById('dlvSentCnt').textContent = sentCnt+' gói';
-  document.getElementById('dlvPendAmt').textContent = pendFund>0 ? pendFund.toLocaleString()+'k' : '0k';
+  document.getElementById('dlvPendAmt').textContent = pendAmt>0 ? pendAmt.toLocaleString()+'k' : '0k';
   document.getElementById('dlvPendCnt').textContent = pendCnt+' gói';
   document.getElementById('dlvBar').style.width = pct+'%';
   document.getElementById('dlvLegL').textContent = 'Hoàn thành '+pct+'%';
