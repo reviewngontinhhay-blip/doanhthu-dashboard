@@ -905,6 +905,9 @@ function renderDeliveryStats() {
     const bMi = BSHEETS.find(s=>s.name===booking._sheet)?.mi ?? -1;
     if (bMi < (latestMiForKey.get(bKey) ?? -1)) return;
 
+    // Bỏ qua các entry hoàn tiền (sotien < 0) — khách đã được hoàn, không tính vào quỹ
+    if (booking.sotien < 0) return;
+
     // Page Công chúa → luôn hoàn thành, tính booking.sotien
     if(/^(page\s+)?c[oô]ng\s*ch[uú]a$/i.test(tenkhach.trim())) {
       if(booking.sotien > 0) {
