@@ -234,7 +234,7 @@ pre.code{background:#f0f0ea;padding:12px;border-radius:8px;font-size:11px;overfl
     <div class="fcard hi"><div class="lb">💰 Tổng quỹ còn lại</div><div class="vl" style="color:var(--dn)" id="dQuy">—</div><div class="sb">CC + PT (đã trừ chi phí)</div></div>
   </div>
   <div class="ecrd" style="margin-bottom:14px">
-    <div class="dlv-label">Phân bổ quỹ theo tình trạng giao hàng (cơ sở chi lương)</div>
+    <div class="dlv-label">Doanh thu theo tình trạng giao hàng (cơ sở chi lương)</div>
     <div class="dlv-row">
       <div class="dlv-chip sent">
         <div class="dc-lb">✅ Đã hoàn thành cho khách</div>
@@ -1039,10 +1039,10 @@ function renderDeliveryStats() {
   const sentFund = totalRev > 0 ? Math.round(fundTotal * sentAmt / totalRev) : 0;
   const pendFund = fundTotal - sentFund;
 
-  document.getElementById('dlvSentAmt').textContent = sentFund>0 ? sentFund.toLocaleString()+'k' : '0k';
-  document.getElementById('dlvSentCnt').textContent = sentCnt+' gói · ' + sentAmt.toLocaleString()+'k doanh thu';
-  document.getElementById('dlvPendAmt').textContent = pendFund>0 ? pendFund.toLocaleString()+'k' : '0k';
-  document.getElementById('dlvPendCnt').textContent = pendCnt+' gói · ' + pendAmt.toLocaleString()+'k doanh thu';
+  document.getElementById('dlvSentAmt').textContent = sentAmt>0 ? sentAmt.toLocaleString()+'k' : '0k';
+  document.getElementById('dlvSentCnt').textContent = sentCnt+' gói đã hoàn thành';
+  document.getElementById('dlvPendAmt').textContent = pendAmt>0 ? pendAmt.toLocaleString()+'k' : '0k';
+  document.getElementById('dlvPendCnt').textContent = pendCnt+' gói chưa hoàn thành';
   document.getElementById('dlvBar').style.width = pct+'%';
   document.getElementById('dlvLegL').textContent = 'Hoàn thành '+pct+'%';
   document.getElementById('dlvLegR').textContent = 'Chưa xong '+(100-pct)+'%';
