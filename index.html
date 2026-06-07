@@ -878,7 +878,7 @@ function renderDeliveryStats() {
   // Pre-compute 1: mi cao nhất per (tenkhach|tentruyen) → dùng để skip sheet cũ
   const latestMiForKey = new Map();
   allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(b => {
-    const key = (b.tenkhach||'') + '|' + (b.tentruyen||'');
+    const key = normKey(b.tenkhach||'') + '|' + normKey(b.tentruyen||'');
     const mi = BSHEETS.find(s=>s.name===b._sheet)?.mi ?? -1;
     if (mi > (latestMiForKey.get(key) ?? -1)) latestMiForKey.set(key, mi);
   });
@@ -888,7 +888,7 @@ function renderDeliveryStats() {
   const bestPkgAmt  = new Map(); // key = bKey+'|'+pkgName
   const bestBkAmt   = new Map(); // key = bKey (booking-level sotien)
   allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(b => {
-    const bk = (b.tenkhach||'') + '|' + (b.tentruyen||'');
+    const bk = normKey(b.tenkhach||'') + '|' + normKey(b.tentruyen||'');
     if ((b.sotien||0) > (bestBkAmt.get(bk)??0)) bestBkAmt.set(bk, b.sotien);
     (b.packages||[]).forEach(pkg => {
       if ((pkg.sotien||0) > 0) {
@@ -902,7 +902,7 @@ function renderDeliveryStats() {
     const tenkhach = booking.tenkhach||'';
 
     // Bỏ qua nếu cùng khách+truyện có entry từ sheet mới hơn
-    const bKey = tenkhach + '|' + (booking.tentruyen||'');
+    const bKey = normKey(tenkhach) + '|' + normKey(booking.tentruyen||'');
     const bMi = BSHEETS.find(s=>s.name===booking._sheet)?.mi ?? -1;
     if (bMi < (latestMiForKey.get(bKey) ?? -1)) return;
 
@@ -935,7 +935,7 @@ function renderDeliveryStats() {
 
     // Tính xem có package nào có sotien riêng không (kể cả fallback từ sheet cũ)
     const anyPkgAmt = namedPkgs.some(p => {
-      const pk = bKey + '|' + (p.name||'');
+      const pk = bKey + '|' + normKey(p.name||'');
       return (p.sotien||0) > 0 || (bestPkgAmt.get(pk)||0) > 0;
     });
 
@@ -943,7 +943,7 @@ function renderDeliveryStats() {
     const effectiveBkAmt = booking.sotien > 0 ? booking.sotien : (bestBkAmt.get(bKey)||0);
     const bookingTotalAmt = anyPkgAmt
       ? namedPkgs.reduce((s,p) => {
-          const pk = bKey + '|' + (p.name||'');
+          const pk = bKey + '|' + normKey(p.name||'');
           return s + ((p.sotien||0) > 0 ? p.sotien : (bestPkgAmt.get(pk)||0));
         }, 0)
       : effectiveBkAmt;
