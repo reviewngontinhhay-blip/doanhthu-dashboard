@@ -585,6 +585,9 @@ function parseBookings(table, sheetName) {
         tentruyen_linked: !!ttLinked,
         ngayck:ng||'',sotien:parseFloat(st)||0,packages:[]};
       bookings.push(curB);curP=null;
+    } else if(curB&&tt&&String(tt).trim()&&String(tt).trim()!==curB.tentruyen){
+      curB={_id:uid(),_sheet:sheetName,_row:ri+2,page:pg,month:mo,tenkhach:curB.tenkhach,tentruyen:String(tt).trim(),tentruyen_linked:!!ttLinked,ngayck:curB.ngayck,sotien:parseFloat(st)||0,packages:[]};
+      bookings.push(curB);curP=null;
     }
     if(!curB)return;
     // New package — capture sotien riêng (mỗi nd-row có thể có giá riêng)
@@ -866,6 +869,7 @@ function renderDeliveryStats() {
   // mỗi gói có giá riêng ghi ở cột Số Tiền trên dòng nd tương ứng.
 
   const isTaskDone = t => String(t.tiendo||'').trim() === 'Đã gửi khách' || !!t.checked;
+  const isTransferTask = t => { const k=normKey(t.name||'')+normKey(t.tiendo||''); return k.indexOf('chuyenquasheet')>=0||(k.indexOf('chuyen')>=0&&k.indexOf('sheet')>=0); };
   const isSpacer = t => (
     t.name === 'Task' &&
     !String(t.tiendo||'').trim() &&
@@ -950,9 +954,9 @@ function renderDeliveryStats() {
 
     // Để tính đúng tài chính: tiền chỉ tính là "đã giao" khi TẤT CẢ gói trong booking đều xong.
     // Gói 0k không chặn tài chính nhưng vẫn phải hoàn thành để tính booking done.
-    const namedPkgsWithTasks = namedPkgs.filter(p => (p.tasks||[]).length > 0);
+    const namedPkgsWithTasks = namedPkgs.filter(p => (p.tasks||[]).filter(t=>!isTransferTask(t)).length > 0);
     const bookingAllDone = namedPkgsWithTasks.length > 0 &&
-      namedPkgsWithTasks.every(p => (p.tasks||[]).every(isTaskDone));
+      namedPkgsWithTasks.every(p => (p.tasks||[]).filter(t=>!isTransferTask(t)).every(isTaskDone));
 
     // Dùng flag để chỉ cộng tài chính 1 lần cho cả booking (tránh double-count)
     let bookingFinCounted = false;
@@ -973,7 +977,7 @@ function renderDeliveryStats() {
       }
 
       // Named package: dùng TẤT CẢ tasks — KHÔNG lọc isSpacer
-      const realTasks = pkg.tasks||[];
+      const realTasks = (pkg.tasks||[]).filter(t=>!isTransferTask(t));
       if(realTasks.length === 0) return;
 
       const done = realTasks.every(isTaskDone);
