@@ -208,113 +208,113 @@ pre.code{background:#f0f0ea;padding:12px;border-radius:8px;font-size:11px;overfl
     <nav class="tabs">
       <button class="tab on" onclick="switchTab('dash')">Dashboard</button>
       <button class="tab" onclick="switchTab('task')">Booking / Task</button>
-      <button class="tab" onclick="switchTab('policy')">ChÃ­nh SÃ¡ch</button>
+      <button class="tab" onclick="switchTab('policy')">Chính Sách</button>
     </nav>
   </div>
   <div class="hr">
     <span id="liveTag" style="display:none" class="live-tag"><span class="live-dot"></span>Live</span>
     <span id="lastUpd" class="upd-time"></span>
-    <button class="btn-ic" onclick="loadAll()" title="LÃ m má»i"><svg id="rIcon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M4 9A9 9 0 0116.5 5.5M20 15A9 9 0 017.5 18.5"/></svg></button>
-    <button class="btn-ic" onclick="openSetup()" title="CÃ i Äáº·t Apps Script"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
+    <button class="btn-ic" onclick="loadAll()" title="Làm mới"><svg id="rIcon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M4 9A9 9 0 0116.5 5.5M20 15A9 9 0 017.5 18.5"/></svg></button>
+    <button class="btn-ic" onclick="openSetup()" title="Cài đặt Apps Script"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
   </div>
 </header>
 
 <!-- DASHBOARD TAB -->
 <div id="tabDash" class="content on">
-  <div id="dBanner" class="banner warn" style="display:none"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="dBannerTxt"></span><a href="#" onclick="openSetup();return false">CÃ i Äáº·t â</a></div>
+  <div id="dBanner" class="banner warn" style="display:none"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="dBannerTxt"></span><a href="#" onclick="openSetup();return false">Cài đặt →</a></div>
   <div class="stat-grid">
-    <div class="scard"><div class="lb">Tá»ng doanh thu</div><div class="vl" id="dTotal">â</div><div class="sb" id="dTotalSb">Äang táº£i...</div></div>
-    <div class="scard"><div class="lb">ThÃ¡ng má»i nháº¥t</div><div class="vl" id="dCur">â</div><div class="sb" id="dCurSb">â</div></div>
-    <div class="scard"><div class="lb">Page CÃ´ng chÃºa</div><div class="vl" style="color:var(--cc)" id="dCC">â</div><div class="sb">Tá»ng cá»ng</div></div>
-    <div class="scard"><div class="lb">Page PhÃ¹ thuá»·</div><div class="vl" style="color:var(--pt)" id="dPT">â</div><div class="sb">Tá»ng cá»ng</div></div>
+    <div class="scard"><div class="lb">Tổng doanh thu</div><div class="vl" id="dTotal">—</div><div class="sb" id="dTotalSb">Đang tải...</div></div>
+    <div class="scard"><div class="lb">Tháng mới nhất</div><div class="vl" id="dCur">—</div><div class="sb" id="dCurSb">—</div></div>
+    <div class="scard"><div class="lb">Page Công chúa</div><div class="vl" style="color:var(--cc)" id="dCC">—</div><div class="sb">Tổng cộng</div></div>
+    <div class="scard"><div class="lb">Page Phù thuỷ</div><div class="vl" style="color:var(--pt)" id="dPT">—</div><div class="sb">Tổng cộng</div></div>
   </div>
   <div class="fund-grid" style="grid-template-columns:1fr 1fr 1fr">
-    <div class="fcard"><div class="lb">Quá»¹ CÃ´ng chÃºa</div><div class="vl" style="color:var(--cc)" id="dQuyCC">â</div><div class="sb" id="dQuyCCSb">Sheet má»i nháº¥t</div></div>
-    <div class="fcard"><div class="lb">Quá»¹ PhÃ¹ thuá»·</div><div class="vl" style="color:var(--pt)" id="dQuyPT">â</div><div class="sb" id="dQuyPTSb">Sheet má»i nháº¥t</div></div>
-    <div class="fcard hi"><div class="lb">ð° Tá»ng quá»¹ cÃ²n láº¡i</div><div class="vl" style="color:var(--dn)" id="dQuy">â</div><div class="sb">CC + PT (ÄÃ£ trá»« chi phÃ­)</div></div>
+    <div class="fcard"><div class="lb">Quỹ Công chúa</div><div class="vl" style="color:var(--cc)" id="dQuyCC">—</div><div class="sb" id="dQuyCCSb">Sheet mới nhất</div></div>
+    <div class="fcard"><div class="lb">Quỹ Phù thuỷ</div><div class="vl" style="color:var(--pt)" id="dQuyPT">—</div><div class="sb" id="dQuyPTSb">Sheet mới nhất</div></div>
+    <div class="fcard hi"><div class="lb">💰 Tổng quỹ còn lại</div><div class="vl" style="color:var(--dn)" id="dQuy">—</div><div class="sb">CC + PT (đã trừ chi phí)</div></div>
   </div>
   <div class="ecrd" style="margin-bottom:14px">
-    <div class="dlv-label">Doanh thu theo tÃ¬nh tráº¡ng giao hÃ ng (cÆ¡ sá» chi lÆ°Æ¡ng)</div>
+    <div class="dlv-label">Doanh thu theo tình trạng giao hàng (cơ sở chi lương)</div>
     <div class="dlv-row">
       <div class="dlv-chip sent">
-        <div class="dc-lb">â ÄÃ£ hoÃ n thÃ nh cho khÃ¡ch</div>
-        <div class="dc-vl" id="dlvSentAmt">â</div>
-        <div class="dc-sub" id="dlvSentCnt">â booking</div>
+        <div class="dc-lb">✅ Đã hoàn thành cho khách</div>
+        <div class="dc-vl" id="dlvSentAmt">—</div>
+        <div class="dc-sub" id="dlvSentCnt">— booking</div>
       </div>
       <div class="dlv-chip pend">
-        <div class="dc-lb">â³ ChÆ°a hoÃ n thÃ nh</div>
-        <div class="dc-vl" id="dlvPendAmt">â</div>
-        <div class="dc-sub" id="dlvPendCnt">â booking</div>
+        <div class="dc-lb">⏳ Chưa hoàn thành</div>
+        <div class="dc-vl" id="dlvPendAmt">—</div>
+        <div class="dc-sub" id="dlvPendCnt">— booking</div>
       </div>
     </div>
     <div class="dlv-bar-wrap"><div class="dlv-bar" id="dlvBar" style="width:0%"></div></div>
-    <div class="dlv-legend"><span id="dlvLegL">HoÃ n thÃ nh 0%</span><span id="dlvLegR">ChÆ°a xong 100%</span></div>
+    <div class="dlv-legend"><span id="dlvLegL">Hoàn thành 0%</span><span id="dlvLegR">Chưa xong 100%</span></div>
     <details style="margin-top:12px">
-      <summary style="cursor:pointer;font-size:12px;color:var(--mu);user-select:none;padding:4px 0">Xem chi tiáº¿t tá»«ng booking â</summary>
+      <summary style="cursor:pointer;font-size:12px;color:var(--mu);user-select:none;padding:4px 0">Xem chi tiết từng booking →</summary>
       <div style="margin-top:8px;overflow-x:auto">
         <table id="dlvDetail" style="width:100%;border-collapse:collapse;font-size:12px">
           <thead>
             <tr style="background:var(--bg2);text-align:left">
-              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">TÃªn khÃ¡ch</th>
-              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">TÃªn truyá»n</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Tên khách</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Tên truyện</th>
               <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Sheet</th>
-              <th style="padding:5px 8px;border-bottom:1px solid var(--bd);text-align:right">Sá» tiá»n</th>
-              <th style="padding:5px 8px;border-bottom:1px solid var(--bd);text-align:center">TÃ¬nh tráº¡ng</th>
-              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Ghi chÃº</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd);text-align:right">Số tiền</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd);text-align:center">Tình trạng</th>
+              <th style="padding:5px 8px;border-bottom:1px solid var(--bd)">Ghi chú</th>
             </tr>
           </thead>
-          <tbody id="dlvDetailBody"><tr><td colspan="6" style="padding:8px;color:var(--mu)">Äang táº£i...</td></tr></tbody>
+          <tbody id="dlvDetailBody"><tr><td colspan="6" style="padding:8px;color:var(--mu)">Đang tải...</td></tr></tbody>
         </table>
       </div>
     </details>
   </div>
   <div class="ecrd">
-    <div class="ctitle" style="margin-bottom:12px">Lá»ch sá»­ chi lÆ°Æ¡ng (tá»« ghi chÃº "chá»t")</div>
+    <div class="ctitle" style="margin-bottom:12px">Lịch sử chi lương (từ ghi chú "chốt")</div>
     <table class="exp-tbl">
-      <thead><tr><th>NgÃ y</th><th>Sheet</th><th>Ghi chÃº</th><th>Sá» tiá»n</th></tr></thead>
-      <tbody id="expTbl"><tr><td colspan="4" class="empty">Äang táº£i...</td></tr></tbody>
+      <thead><tr><th>Ngày</th><th>Sheet</th><th>Ghi chú</th><th>Số tiền</th></tr></thead>
+      <tbody id="expTbl"><tr><td colspan="4" class="empty">Đang tải...</td></tr></tbody>
     </table>
   </div>
   <div class="sgrid" id="sheetGrid"></div>
   <div class="charts-row">
     <div class="ccrd">
-      <div class="ctitle">Doanh thu theo thÃ¡ng</div>
-      <div class="legend"><div class="li"><div class="ld-dot" style="background:var(--cc)"></div>CÃ´ng chÃºa</div><div class="li"><div class="ld-dot" style="background:var(--pt)"></div>PhÃ¹ thuá»·</div></div>
-      <div style="position:relative;height:220px"><canvas id="barChart" role="img" aria-label="Biá»u Äá» doanh thu hÃ ng thÃ¡ng">Dá»¯ liá»u Äang táº£i</canvas></div>
+      <div class="ctitle">Doanh thu theo tháng</div>
+      <div class="legend"><div class="li"><div class="ld-dot" style="background:var(--cc)"></div>Công chúa</div><div class="li"><div class="ld-dot" style="background:var(--pt)"></div>Phù thuỷ</div></div>
+      <div style="position:relative;height:220px"><canvas id="barChart" role="img" aria-label="Biểu đồ doanh thu hàng tháng">Dữ liệu đang tải</canvas></div>
     </div>
     <div class="ccrd">
-      <div class="ctitle">PhÃ¢n bá» 2 page</div>
-      <div style="position:relative;height:170px"><canvas id="donutChart" role="img" aria-label="PhÃ¢n bá» doanh thu theo page">Dá»¯ liá»u Äang táº£i</canvas></div>
+      <div class="ctitle">Phân bổ 2 page</div>
+      <div style="position:relative;height:170px"><canvas id="donutChart" role="img" aria-label="Phân bổ doanh thu theo page">Dữ liệu đang tải</canvas></div>
       <div class="legend" style="justify-content:center;margin-top:12px;margin-bottom:0">
-        <div class="li"><div class="ld-dot" style="background:var(--cc)"></div>CC <b id="pctCC">â</b></div>
-        <div class="li"><div class="ld-dot" style="background:var(--pt)"></div>PT <b id="pctPT">â</b></div>
+        <div class="li"><div class="ld-dot" style="background:var(--cc)"></div>CC <b id="pctCC">—</b></div>
+        <div class="li"><div class="ld-dot" style="background:var(--pt)"></div>PT <b id="pctPT">—</b></div>
       </div>
     </div>
   </div>
   <div class="tcrd">
-    <div class="ctitle" style="margin-bottom:14px">Top khÃ¡ch hÃ ng</div>
-    <table class="client-tbl"><thead><tr><th style="width:28px">#</th><th>TÃªn khÃ¡ch</th><th style="text-align:right;width:90px">Doanh thu</th><th style="width:160px"></th></tr></thead>
-    <tbody id="topClients"><tr><td colspan="4" class="empty">Äang táº£i...</td></tr></tbody></table>
+    <div class="ctitle" style="margin-bottom:14px">Top khách hàng</div>
+    <table class="client-tbl"><thead><tr><th style="width:28px">#</th><th>Tên khách</th><th style="text-align:right;width:90px">Doanh thu</th><th style="width:160px"></th></tr></thead>
+    <tbody id="topClients"><tr><td colspan="4" class="empty">Đang tải...</td></tr></tbody></table>
   </div>
   <div class="dcrd">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
-      <div class="ctitle" style="margin:0">Doanh thu theo ngÃ y</div>
+      <div class="ctitle" style="margin:0">Doanh thu theo ngày</div>
       <div style="display:flex;gap:6px">
-        <button class="drng-btn on" id="dr7"  onclick="setDRange(7)">7 ngÃ y</button>
-        <button class="drng-btn"    id="dr30" onclick="setDRange(30)">30 ngÃ y</button>
-        <button class="drng-btn"    id="dr0"  onclick="setDRange(0)">Táº¥t cáº£</button>
+        <button class="drng-btn on" id="dr7"  onclick="setDRange(7)">7 ngày</button>
+        <button class="drng-btn"    id="dr30" onclick="setDRange(30)">30 ngày</button>
+        <button class="drng-btn"    id="dr0"  onclick="setDRange(0)">Tất cả</button>
       </div>
     </div>
     <div style="position:relative;height:200px"><canvas id="dayChart"></canvas></div>
     <table class="day-tbl">
       <thead><tr>
-        <th>NgÃ y</th>
-        <th style="color:var(--cc)">CÃ´ng chÃºa</th>
-        <th style="color:var(--pt)">PhÃ¹ thuá»·</th>
-        <th>Tá»ng</th>
+        <th>Ngày</th>
+        <th style="color:var(--cc)">Công chúa</th>
+        <th style="color:var(--pt)">Phù thuỷ</th>
+        <th>Tổng</th>
         <th>Booking</th>
       </tr></thead>
-      <tbody id="dayTbl"><tr><td colspan="5" class="empty">Äang táº£i...</td></tr></tbody>
+      <tbody id="dayTbl"><tr><td colspan="5" class="empty">Đang tải...</td></tr></tbody>
     </table>
   </div>
 </div>
@@ -322,42 +322,42 @@ pre.code{background:#f0f0ea;padding:12px;border-radius:8px;font-size:11px;overfl
 <!-- TASK TAB -->
 <div id="tabTask" class="content">
   <div class="fbar">
-    <select id="fPg" onchange="filterB()"><option value="">Táº¥t cáº£ page</option><option value="cc">CÃ´ng chÃºa</option><option value="pt">PhÃ¹ thuá»·</option></select>
-    <select id="fMo" onchange="filterB()"><option value="">Táº¥t cáº£ thÃ¡ng</option></select>
-    <select id="fSt" onchange="filterB()"><option value="">Táº¥t cáº£ tráº¡ng thÃ¡i</option><option value="pend">ChÆ°a lÃ m</option><option value="do">Äang lÃ m</option><option value="dn">HoÃ n thÃ nh</option></select>
-    <input type="text" id="fSr" placeholder="TÃ¬m tÃªn khÃ¡ch..." oninput="filterB()">
-    <span class="fclear" onclick="clearBF()">XoÃ¡ lá»c</span>
+    <select id="fPg" onchange="filterB()"><option value="">Tất cả page</option><option value="cc">Công chúa</option><option value="pt">Phù thuỷ</option></select>
+    <select id="fMo" onchange="filterB()"><option value="">Tất cả tháng</option></select>
+    <select id="fSt" onchange="filterB()"><option value="">Tất cả trạng thái</option><option value="pend">Chưa làm</option><option value="do">Đang làm</option><option value="dn">Hoàn thành</option></select>
+    <input type="text" id="fSr" placeholder="Tìm tên khách..." oninput="filterB()">
+    <span class="fclear" onclick="clearBF()">Xoá lọc</span>
     <span class="fcnt" id="bCnt"></span>
   </div>
   <div class="bk-stats">
-    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--tx);display:inline-block"></span>Tá»ng <b id="bkTot">0</b></div>
-    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--pend);display:inline-block"></span>ChÆ°a lÃ m <b id="bkPend">0</b></div>
-    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--do);display:inline-block"></span>Äang lÃ m <b id="bkDo">0</b></div>
-    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--dn);display:inline-block"></span>HoÃ n thÃ nh <b id="bkDn">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--tx);display:inline-block"></span>Tổng <b id="bkTot">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--pend);display:inline-block"></span>Chưa làm <b id="bkPend">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--do);display:inline-block"></span>Đang làm <b id="bkDo">0</b></div>
+    <div class="bkpill"><span style="width:7px;height:7px;border-radius:50%;background:var(--dn);display:inline-block"></span>Hoàn thành <b id="bkDn">0</b></div>
   </div>
-  <div id="bookingList"><div class="empty"><span class="spin">â»</span> Äang táº£i booking...</div></div>
+  <div id="bookingList"><div class="empty"><span class="spin">↻</span> Đang tải booking...</div></div>
 </div>
 
 <!-- POLICY TAB -->
 <div id="tabPolicy" class="content">
-  <div id="polContent"><div class="empty"><span class="spin">â»</span> Äang táº£i chÃ­nh sÃ¡ch...</div></div>
+  <div id="polContent"><div class="empty"><span class="spin">↻</span> Đang tải chính sách...</div></div>
 </div>
 
 <!-- SETUP MODAL -->
 <div id="setupOverlay" class="overlay" style="display:none" onclick="if(event.target===this)closeSetup()">
   <div class="modal" onclick="event.stopPropagation()">
-    <div class="mhdr"><h2>CÃ i Äáº·t Apps Script</h2><button class="mclose" onclick="closeSetup()">â</button></div>
+    <div class="mhdr"><h2>Cài đặt Apps Script</h2><button class="mclose" onclick="closeSetup()">✕</button></div>
     <div class="mbody">
-      <p style="font-size:13px;color:var(--mu);margin-bottom:16px;line-height:1.7">CÃ i Apps Script Äá» thÃªm/sá»­a task vÃ  Äá»ng bá» 2 chiá»u vá»i Google Sheets.</p>
+      <p style="font-size:13px;color:var(--mu);margin-bottom:16px;line-height:1.7">Cài Apps Script để thêm/sửa task và đồng bộ 2 chiều với Google Sheets.</p>
       <div class="setup-steps">
-        <b>1.</b> Má» Google Sheets â <b>Extensions â Apps Script</b><br>
-        <b>2.</b> XoÃ¡ code cÅ©, dÃ¡n code dÆ°á»i vÃ o<br>
-        <b>3.</b> <b>Deploy â New deployment â Web app</b><br>
-        <b>4.</b> Execute as: <b>Me</b> Â· Who has access: <b>Anyone</b><br>
-        <b>5.</b> Copy URL web app â dÃ¡n vÃ o Ã´ bÃªn dÆ°á»i
+        <b>1.</b> Mở Google Sheets → <b>Extensions → Apps Script</b><br>
+        <b>2.</b> Xoá code cũ, dán code dưới vào<br>
+        <b>3.</b> <b>Deploy → New deployment → Web app</b><br>
+        <b>4.</b> Execute as: <b>Me</b> · Who has access: <b>Anyone</b><br>
+        <b>5.</b> Copy URL web app → dán vào ô bên dưới
       </div>
       <details style="margin-bottom:16px">
-        <summary style="cursor:pointer;font-size:13px;font-weight:600;padding:6px 0">Xem Apps Script code â</summary>
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;padding:6px 0">Xem Apps Script code →</summary>
         <pre class="code" id="ascCode"></pre>
         <button onclick="cpCode()" style="margin-top:6px;padding:5px 12px;border:1px solid var(--bd);border-radius:6px;background:var(--card);cursor:pointer;font-size:12px">Copy code</button>
       </details>
@@ -365,36 +365,36 @@ pre.code{background:#f0f0ea;padding:12px;border-radius:8px;font-size:11px;overfl
       <div id="testRes" style="font-size:13px;min-height:18px"></div>
     </div>
     <div class="mfoot">
-      <button class="btn-s" onclick="testConn()">Kiá»m tra káº¿t ná»i</button>
-      <div class="mfoot-r"><button class="btn-s" onclick="closeSetup()">Huá»·</button><button class="btn-p" onclick="saveSetup()">LÆ°u</button></div>
+      <button class="btn-s" onclick="testConn()">Kiểm tra kết nối</button>
+      <div class="mfoot-r"><button class="btn-s" onclick="closeSetup()">Huỷ</button><button class="btn-p" onclick="saveSetup()">Lưu</button></div>
     </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// âââ CONFIG âââââââââââââââââââââââââââââââââââââââââââ
+// ═══ CONFIG ═══════════════════════════════════════════
 const SID = '1Ha4o05fe9YuNRpfoO5HgvmdfaULxwqI9a-2UyDSc5rU';
 let AU = localStorage.getItem('bkAU') || '';
 
-// BSHEETS & MONTHS ÄÆ°á»£c build Äá»ng sau khi fetch danh sÃ¡ch sheet
+// BSHEETS & MONTHS được build động sau khi fetch danh sách sheet
 let BSHEETS = [];
 let MONTHS  = [];
 let DELIVERY_SHEETS = new Set();
-const POLICY_SHEET = 'GÃ³i + ChÃ­nh SÃ¡ch';
+const POLICY_SHEET = 'Gói + Chính Sách';
 
-// PhÃ¢n tÃ­ch tÃªn sheet thÃ nh {name, page, mo, mi}
-// mi = sá» thÃ¡ng ká» tá»« T11/2025 (mi=0)
+// Phân tích tên sheet thành {name, page, mo, mi}
+// mi = số tháng kể từ T11/2025 (mi=0)
 function parseSheetEntry(name) {
   let m, y, page;
-  let match = name.match(/ThÃ¡ng\s+(\d+)-(\d{4})/);
+  let match = name.match(/Tháng\s+(\d+)-(\d{4})/);
   if (match) { m=+match[1]; y=+match[2]; page='cc'; }
   if (!match) {
-    match = name.match(/CÃ´ng\s*ch[uÃº]a\s+T(\d+)-(\d{4})/i);
+    match = name.match(/Công\s*ch[uú]a\s+T(\d+)-(\d{4})/i);
     if (match) { m=+match[1]; y=+match[2]; page='cc'; }
   }
   if (!match) {
-    match = name.match(/PhÃ¹\s+thu[á»·á»¹]\s+T(\d+)-(\d{4})/i);
+    match = name.match(/Phù\s+thu[ỷỹ]\s+T(\d+)-(\d{4})/i);
     if (match) { m=+match[1]; y=+match[2]; page='pt'; }
   }
   if (!match) return null;
@@ -404,7 +404,7 @@ function parseSheetEntry(name) {
   return {name, page, mo, mi};
 }
 
-// Fetch danh sÃ¡ch sheet tá»« Google Sheets feeds API (public)
+// Fetch danh sách sheet từ Google Sheets feeds API (public)
 async function fetchAndBuildSheets() {
   let sheetNames = null;
   try {
@@ -416,30 +416,30 @@ async function fetchAndBuildSheets() {
     }
   } catch(e) {}
 
-  // Fallback náº¿u fetch tháº¥t báº¡i
+  // Fallback nếu fetch thất bại
   if (!sheetNames) {
     sheetNames = [
-      'ThÃ¡ng 11-2025','ThÃ¡ng 12-2025','ThÃ¡ng 1-2026','ThÃ¡ng 2-2026',
-      'ThÃ¡ng 3-2026','ThÃ¡ng 4-2026','PhÃ¹ thuá»· T4-2026',
-      'PhÃ¹ thuá»· T5-2026','CÃ´ng chÃºa T5-2026',
-      'PhÃ¹ thuá»· T6-2026','CÃ´ng chÃºa T6-2026'
+      'Tháng 11-2025','Tháng 12-2025','Tháng 1-2026','Tháng 2-2026',
+      'Tháng 3-2026','Tháng 4-2026','Phù thuỷ T4-2026',
+      'Phù thuỷ T5-2026','Công chúa T5-2026',
+      'Phù thuỷ T6-2026','Công chúa T6-2026'
     ];
   }
 
   BSHEETS = sheetNames.map(parseSheetEntry).filter(Boolean);
   BSHEETS.sort((a,b) => a.mi - b.mi || (a.page==='cc'?0:1) - (b.page==='cc'?0:1));
 
-  // Build MONTHS: má»i mi duy nháº¥t â má»t label thÃ¡ng
+  // Build MONTHS: mỗi mi duy nhất → một label tháng
   const moMap = new Map();
   BSHEETS.forEach(s => { if (!moMap.has(s.mi)) moMap.set(s.mi, s.mo); });
   MONTHS = [...moMap.entries()].sort((a,b)=>a[0]-b[0]).map(([,mo])=>mo);
 
-  // DELIVERY_SHEETS: tá»± Äá»ng láº¥y 2 thÃ¡ng gáº§n nháº¥t
+  // DELIVERY_SHEETS: tự động lấy 2 tháng gần nhất
   const maxMi = BSHEETS.length ? Math.max(...BSHEETS.map(s=>s.mi)) : 0;
   DELIVERY_SHEETS = new Set(BSHEETS.filter(s => s.mi >= maxMi - 1).map(s => s.name));
 }
 
-// âââ STATE âââââââââââââââââââââââââââââââââââââââââââââ
+// ═══ STATE ═════════════════════════════════════════════
 let ccRev   = new Array(MONTHS.length).fill(0);
 let ptRev   = new Array(MONTHS.length).fill(0);
 let ccFunds = new Array(MONTHS.length).fill(null);
@@ -454,14 +454,14 @@ let barChart, donutChart, dayChart;
 let dRange = 7;
 let allExpenses = [];
 
-// âââ HELPERS ââââââââââââââââââââââââââââââââââââââââââ
-// Chuáº©n hoÃ¡ key Äá» dedup: bá» dáº¥u tiáº¿ng Viá»t, bá» ná»i dung trong ngoáº·c () vÃ  [],
-// chá» giá»¯ chá»¯/sá», lowercase â giá»ng Apps Script sendDailyPendingReport
+// ═══ HELPERS ══════════════════════════════════════════
+// Chuẩn hoá key để dedup: bỏ dấu tiếng Việt, bỏ nội dung trong ngoặc () và [],
+// chỉ giữ chữ/số, lowercase — giống Apps Script sendDailyPendingReport
 function normKey(text) {
   return String(text||'')
     .normalize('NFD')
-    .replace(/[Ì-Í¯á·-á·¿â-â¿]/g, '')
-    .replace(/[\(\ï¼][^\)\ï¼]*[\)\ï¼]/g, '')
+    .replace(/[̀-ͯ᷀-᷿⃐-⃿]/g, '')
+    .replace(/[\(\（][^\)\）]*[\)\）]/g, '')
     .replace(/\[[^\]]*\]/g, '')
     .replace(/[^a-z0-9]/gi, '')
     .toLowerCase();
@@ -470,12 +470,12 @@ const uid = () => '_' + Math.random().toString(36).substr(2,9);
 const isDone = v => {
   if(!v&&v!==0)return false;
   const s=String(v).trim();
-  return s==='Xong'||s==='ÄÃ£ gá»­i khÃ¡ch'||v===true||(!isNaN(parseFloat(s))&&parseFloat(s)>=1);
+  return s==='Xong'||s==='Đã gửi khách'||v===true||(!isNaN(parseFloat(s))&&parseFloat(s)>=1);
 };
 const taskSt = (tiendo, nguoilam) => {
   if(tiendo){const s=String(tiendo).trim();
-    if(s==='Xong'||s==='ÄÃ£ gá»­i khÃ¡ch')return'dn';
-    if(s==='Äang lÃ m')return'do';
+    if(s==='Xong'||s==='Đã gửi khách')return'dn';
+    if(s==='Đang làm')return'do';
     if(!isNaN(parseFloat(s))&&parseFloat(s)>=1)return'dn';
   }
   if(nguoilam&&String(nguoilam).trim())return'do';
@@ -488,13 +488,13 @@ const stOf = tasks => {
   if (d === tasks.length) return 'dn';
   return 'do';
 };
-const stLbl = s => ({pend:'ChÆ°a lÃ m',do:'Äang lÃ m',dn:'HoÃ n thÃ nh'}[s]||s);
-const pgOf = n => (n&&(n.includes('PhÃ¹ thu')||n.includes('PhÃ¹ thá»§')))?'pt':'cc';
+const stLbl = s => ({pend:'Chưa làm',do:'Đang làm',dn:'Hoàn thành'}[s]||s);
+const pgOf = n => (n&&(n.includes('Phù thu')||n.includes('Phù thủ')))?'pt':'cc';
 const moOf = n => { const s=BSHEETS.find(x=>x.name===n); return s?s.mo:n; };
 const fmtD = v => { if(!v)return''; try{const d=new Date(v);if(!isNaN(d))return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'2-digit'})}catch(e){} return String(v).substring(0,10); };
 const fmtM = v => { const n=parseFloat(v); return (!n||isNaN(n))?'':n.toLocaleString()+'k'; };
 
-// âââ JSONP âââââââââââââââââââââââââââââââââââââââââââââ
+// ═══ JSONP ═════════════════════════════════════════════
 function jLoad(sn) {
   return new Promise((res,rej) => {
     const cb='_g'+Date.now()+Math.floor(Math.random()*9999);
@@ -507,7 +507,7 @@ function jLoad(sn) {
   });
 }
 
-// âââ APPS SCRIPT âââââââââââââââââââââââââââââââââââââââ
+// ═══ APPS SCRIPT ═══════════════════════════════════════
 function asCall(p) {
   if(!AU)return Promise.reject(new Error('no_url'));
   return new Promise((res,rej)=>{
@@ -521,23 +521,23 @@ function asCall(p) {
   });
 }
 
-// âââ PARSE: Revenue (tá»ng Sá» Tiá»n cá»§a thÃ¡ng ÄÃ³) ââââââââ
+// ═══ PARSE: Revenue (tổng Số Tiền của tháng đó) ════════
 function parseRev(table) {
   if(!table||!table.cols||!table.rows) return 0;
-  const soIdx=table.cols.findIndex(c=>c.label&&c.label.includes('Sá» Tiá»n'));
+  const soIdx=table.cols.findIndex(c=>c.label&&c.label.includes('Số Tiền'));
   if(soIdx<0) return 0;
   let s=0;
   table.rows.forEach(r=>{const c=r.c[soIdx];if(c&&typeof c.v==='number'&&c.v>0)s+=c.v});
   return s;
 }
 
-// âââ PARSE: Fund (cá»t Tá»ng á» hÃ ng 2 = quá»¹ tÃ­ch lÅ©y) âââ
+// ═══ PARSE: Fund (cột Tổng ở hàng 2 = quỹ tích lũy) ═══
 function parseFund(table) {
   if(!table||!table.cols||!table.rows||!table.rows.length) return null;
-  const tongIdx=table.cols.findIndex(c=>c.label&&c.label.includes('Tá»ng'));
+  const tongIdx=table.cols.findIndex(c=>c.label&&c.label.includes('Tổng'));
   if(tongIdx<0) return null;
-  // HÃ ng 2 trong sheet = table.rows[0] sau header
-  // Duyá»t vÃ i hÃ ng Äáº§u Äá» tÃ¬m giÃ¡ trá» Tá»ng (cÃ³ thá» lá»ch 1-2 hÃ ng)
+  // Hàng 2 trong sheet = table.rows[0] sau header
+  // Duyệt vài hàng đầu để tìm giá trị Tổng (có thể lệch 1-2 hàng)
   for(let i=0;i<Math.min(4,table.rows.length);i++){
     const cell=table.rows[i].c[tongIdx];
     if(cell&&typeof cell.v==='number') return cell.v;
@@ -545,17 +545,17 @@ function parseFund(table) {
   return null;
 }
 
-// âââ PARSE: Bookings (hierarchical) ââââââââââââââââââââ
+// ═══ PARSE: Bookings (hierarchical) ════════════════════
 function parseBookings(table, sheetName) {
   if(!table||!table.cols||!table.rows)return[];
   const cols=table.cols.map(c=>(c.label||c.id||'').trim());
   const g=(row,col)=>{const i=cols.indexOf(col);if(i<0)return null;const x=row.c[i];return x?x.v:null};
-  // Äá»c cell kÃ¨m formatted value Äá» detect hyperlink
+  // Đọc cell kèm formatted value để detect hyperlink
   const gCell=(row,col)=>{const i=cols.indexOf(col);if(i<0)return null;return row.c[i]||null};
-  // TÃ¬m cá»t checkbox "Note (tiktok tick khi Äá»§ 100 tim, cÃ²n láº¡i tick khi hoÃ n thÃ nh)"
-  const chkColIdx = cols.findIndex(c => /tick khi ho[Ã a]n th[Ã a]nh/i.test(c) || /^note\s*\(/i.test(c));
-  // getChkInfo: phÃ¢n biá»t "checkbox tá»n táº¡i nhÆ°ng chÆ°a tick" {v:false} vs "Ã´ rá»ng" null
-  // â hasChk=true náº¿u cell lÃ  boolean (checkbox), ká» cáº£ false (chÆ°a tick)
+  // Tìm cột checkbox "Note (tiktok tick khi đủ 100 tim, còn lại tick khi hoàn thành)"
+  const chkColIdx = cols.findIndex(c => /tick khi ho[àa]n th[àa]nh/i.test(c) || /^note\s*\(/i.test(c));
+  // getChkInfo: phân biệt "checkbox tồn tại nhưng chưa tick" {v:false} vs "ô rỗng" null
+  // → hasChk=true nếu cell là boolean (checkbox), kể cả false (chưa tick)
   const getChkInfo = (row) => {
     if(chkColIdx < 0) return {checked:false, hasChk:false};
     const cell = row.c[chkColIdx];
@@ -567,13 +567,13 @@ function parseBookings(table, sheetName) {
   const pg=pgOf(sheetName),mo=moOf(sheetName);
   const bookings=[];let curB=null,curP=null;
   table.rows.forEach((row,ri)=>{
-    const tk=g(row,'TÃªn KhÃ¡ch');const nd=g(row,'Ná»i Dung');const hm=g(row,'Háº¡ng má»¥c');
-    const nl=g(row,'NgÆ°á»i lÃ m');const lp=g(row,'Link page/tiktok');
-    const td=g(row,'Tiáº¿n Äá»');const st=g(row,'Sá» Tiá»n');
-    const tt=g(row,'TÃªn Truyá»n');const ng=g(row,'NgÃ y ck');
+    const tk=g(row,'Tên Khách');const nd=g(row,'Nội Dung');const hm=g(row,'Hạng mục');
+    const nl=g(row,'Người làm');const lp=g(row,'Link page/tiktok');
+    const td=g(row,'Tiến độ');const st=g(row,'Số Tiền');
+    const tt=g(row,'Tên Truyện');const ng=g(row,'Ngày ck');
     const chkInfo=getChkInfo(row);const chk=chkInfo.checked;const hasChk=chkInfo.hasChk;
-    // Detect tentruyen lÃ  hyperlink: v báº¯t Äáº§u báº±ng http, HOáº¶C f â  v (hyperlink formula)
-    const ttCell=gCell(row,'TÃªn Truyá»n');
+    // Detect tentruyen là hyperlink: v bắt đầu bằng http, HOẶC f ≠ v (hyperlink formula)
+    const ttCell=gCell(row,'Tên Truyện');
     const ttLinked = ttCell && (
       (ttCell.v && /^https?:\/\//i.test(String(ttCell.v))) ||
       (ttCell.f && ttCell.v && String(ttCell.f).trim() !== String(ttCell.v).trim())
@@ -590,14 +590,14 @@ function parseBookings(table, sheetName) {
       bookings.push(curB);curP=null;
     }
     if(!curB)return;
-    // New package â capture sotien riÃªng (má»i nd-row cÃ³ thá» cÃ³ giÃ¡ riÃªng)
+    // New package — capture sotien riêng (mỗi nd-row có thể có giá riêng)
     if(nd&&String(nd).trim()){
       curP={_id:uid(),name:String(nd).trim(),tasks:[],sotien:parseFloat(st)||0};
       curB.packages.push(curP);
     }
     if(!curP){
       // Create a default package if none exists
-      curP={_id:uid(),name:'â',tasks:[]};
+      curP={_id:uid(),name:'—',tasks:[]};
       curB.packages.push(curP);
     }
     // Add task
@@ -628,7 +628,7 @@ function parseBookings(table, sheetName) {
   return bookings;
 }
 
-// âââ PARSE: Expenses (tá»« ghi chÃº "chá»t XXXX") ââââââââââ
+// ═══ PARSE: Expenses (từ ghi chú "chốt XXXX") ══════════
 function parseExpenses(table, sheetName) {
   if(!table||!table.cols||!table.rows) return [];
   const expenses = [];
@@ -643,22 +643,22 @@ function parseExpenses(table, sheetName) {
   table.rows.forEach(row => {
     if(!row.c) return;
 
-    // BÆ°á»c 1: tÃ¬m Ã´ "chá»t XXXX" vÃ  ghi láº¡i index cá»t
+    // Bước 1: tìm ô "chốt XXXX" và ghi lại index cột
     let amount = null, noteText = '', chotIdx = -1, carry = null;
     row.c.forEach((cell, ci) => {
       if(!cell||cell.v==null) return;
       const v = String(cell.v).trim();
-      const mChot = v.match(/ch[oá»]t\s*(\d{3,}[\d,.]*)/i);
+      const mChot = v.match(/ch[oố]t\s*(\d{3,}[\d,.]*)/i);
       if(mChot) {
         amount = parseFloat(mChot[1].replace(/,/g,''));
         noteText = v; chotIdx = ci;
       }
-      const mCarry = v.match(/ÄÃ£ cá»ng\s*(\d[\d,.]*)/i);
+      const mCarry = v.match(/đã cộng\s*(\d[\d,.]*)/i);
       if(mCarry) carry = parseFloat(mCarry[1].replace(/,/g,''));
     });
     if(!amount || chotIdx < 0) return;
 
-    // BÆ°á»c 2: tÃ¬m ngÃ y á» cÃ¡c Ã´ gáº§n Ã´ "chá»t" (Â±6 cá»t), Æ°u tiÃªn trÆ°á»c
+    // Bước 2: tìm ngày ở các ô gần ô "chốt" (±6 cột), ưu tiên trước
     let date = null;
     const lo = Math.max(0, chotIdx-6), hi = Math.min(row.c.length, chotIdx+7);
     for(let i=lo; i<hi && !date; i++) {
@@ -667,7 +667,7 @@ function parseExpenses(table, sheetName) {
       date = tryParseTextDate(v);
       if(!date) { const d=parseDate(cell.v); if(d) date=d; }
     }
-    // BÆ°á»c 3: náº¿u chÆ°a tÃ¬m ÄÆ°á»£c, quÃ©t pháº§n cá»t phá»¥ (tá»« cá»t 12 trá» Äi) trÃ¡nh cá»t A
+    // Bước 3: nếu chưa tìm được, quét phần cột phụ (từ cột 12 trở đi) tránh cột A
     if(!date) {
       for(let i=12; i<row.c.length && !date; i++) {
         const cell = row.c[i]; if(!cell||cell.v==null) continue;
@@ -680,11 +680,11 @@ function parseExpenses(table, sheetName) {
   return expenses;
 }
 
-// âââ PARSE: Policy âââââââââââââââââââââââââââââââââââââ
+// ═══ PARSE: Policy ═════════════════════════════════════
 function parsePolicyCols(table) {
   if(!table||!table.cols||!table.rows)return[];
   const cols=table.cols.map(c=>(c.label||c.id||'').trim());
-  // Flexible column finder â partial, case-insensitive
+  // Flexible column finder — partial, case-insensitive
   const findCol = (...keys) => {
     for(const k of keys){
       const i=cols.findIndex(c=>c.toLowerCase().includes(k.toLowerCase()));
@@ -692,10 +692,10 @@ function parsePolicyCols(table) {
     }
     return -1;
   };
-  const iName = findCol('tÃªn','name');
-  const iDesc = findCol('ná»i dung','mÃ´ táº£','desc','content');
-  const iNote = findCol('ghi chÃº','ghi chu','note');
-  const iPrice= findCol('giÃ¡','gia','price');
+  const iName = findCol('tên','name');
+  const iDesc = findCol('nội dung','mô tả','desc','content');
+  const iNote = findCol('ghi chú','ghi chu','note');
+  const iPrice= findCol('giá','gia','price');
   const gv=(row,i)=>{if(i<0)return'';const x=row.c[i];return x&&x.v!=null?String(x.v).trim():''};
   return table.rows.map(row=>({
     ten:  gv(row,iName),
@@ -705,12 +705,12 @@ function parsePolicyCols(table) {
   })).filter(r=>r.ten||r.noidung);
 }
 
-// âââ LOAD ALL ââââââââââââââââââââââââââââââââââââââââââ
+// ═══ LOAD ALL ══════════════════════════════════════════
 async function loadAll() {
   const ic=document.getElementById('rIcon');ic.classList.add('spin');
   document.getElementById('liveTag').style.display='none';
 
-  // Fetch danh sÃ¡ch sheet Äá»ng tá»« Google Sheets
+  // Fetch danh sách sheet động từ Google Sheets
   await fetchAndBuildSheets();
 
   const arrLen = MONTHS.length || 1;
@@ -749,24 +749,24 @@ async function loadAll() {
 
   ic.classList.remove('spin');
   document.getElementById('liveTag').style.display='flex';
-  document.getElementById('lastUpd').textContent='Cáº­p nháº­t '+new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
-  if(!AU){showBanner('ChÆ°a cÃ i Apps Script â chá» xem dá»¯ liá»u, chÆ°a sá»­a ÄÆ°á»£c task.');} else {document.getElementById('dBanner').style.display='none';}
+  document.getElementById('lastUpd').textContent='Cập nhật '+new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+  if(!AU){showBanner('Chưa cài Apps Script — chỉ xem dữ liệu, chưa sửa được task.');} else {document.getElementById('dBanner').style.display='none';}
 }
 
 function showBanner(txt){const b=document.getElementById('dBanner');b.style.display='flex';document.getElementById('dBannerTxt').textContent=txt;}
 
-// âââ DASHBOARD ââââââââââââââââââââââââââââââââââââââââââ
+// ═══ DASHBOARD ══════════════════════════════════════════
 function updateDashboard(){
   const totalCC=ccRev.reduce((a,b)=>a+b,0);
   const totalPT=ptRev.reduce((a,b)=>a+b,0);
   const grand=totalCC+totalPT;
-  // Má»i page láº¥y thÃ¡ng má»i nháº¥t cÃ³ thu > 0 Äá»c láº­p
+  // Mỗi page lấy tháng mới nhất có thu > 0 độc lập
   let ccLi=0;for(let i=MONTHS.length-1;i>=0;i--){if(ccRev[i]>0){ccLi=i;break;}}
   let ptLi=0;for(let i=MONTHS.length-1;i>=0;i--){if(ptRev[i]>0){ptLi=i;break;}}
   const latestTotal=ccRev[ccLi]+ptRev[ptLi];
   const latestLabel=ccLi===ptLi?MONTHS[ccLi]+' (2 page)':'CC '+MONTHS[ccLi]+' + PT '+MONTHS[ptLi];
   document.getElementById('dTotal').textContent=grand.toLocaleString()+'k';
-  document.getElementById('dTotalSb').textContent=MONTHS.length>1?MONTHS[0]+' â '+MONTHS[MONTHS.length-1]:'';
+  document.getElementById('dTotalSb').textContent=MONTHS.length>1?MONTHS[0]+' – '+MONTHS[MONTHS.length-1]:'';
   document.getElementById('dCur').textContent=latestTotal.toLocaleString()+'k';
   document.getElementById('dCurSb').textContent=latestLabel;
   document.getElementById('dCC').textContent=totalCC.toLocaleString()+'k';
@@ -786,8 +786,8 @@ function updateDashboard(){
 }
 
 function calcFund() {
-  // Label: dÃ¹ng sheet má»i nháº¥t ÄÃ£ load ÄÆ°á»£c cho tá»«ng page
-  // Value: dÃ¹ng Tá»ng cá»§a sheet ÄÃ³; náº¿u = 0, fallback vá» thÃ¡ng trÆ°á»c gáº§n nháº¥t cÃ³ giÃ¡ trá»
+  // Label: dùng sheet mới nhất đã load được cho từng page
+  // Value: dùng Tổng của sheet đó; nếu = 0, fallback về tháng trước gần nhất có giá trị
   const okCC = BSHEETS.filter(s=>s.page==='cc'&&sheetSt[s.name]==='ok');
   const okPT = BSHEETS.filter(s=>s.page==='pt'&&sheetSt[s.name]==='ok');
 
@@ -818,14 +818,14 @@ function calcFund() {
 
 function renderExpenses(grandTotal) {
   const fund = calcFund();
-  document.getElementById('dQuyCC').textContent = fund.ccSheet ? fund.cc.toLocaleString()+'k' : 'â';
-  document.getElementById('dQuyCCSb').textContent = fund.ccSheet ? 'Sheet '+fund.ccSheet : 'ChÆ°a cÃ³ dá»¯ liá»u';
-  document.getElementById('dQuyPT').textContent = fund.ptSheet ? fund.pt.toLocaleString()+'k' : 'â';
-  document.getElementById('dQuyPTSb').textContent = fund.ptSheet ? 'Sheet '+fund.ptSheet : 'ChÆ°a cÃ³ dá»¯ liá»u';
-  document.getElementById('dQuy').textContent = (fund.ccSheet||fund.ptSheet) ? fund.total.toLocaleString()+'k' : 'â';
+  document.getElementById('dQuyCC').textContent = fund.ccSheet ? fund.cc.toLocaleString()+'k' : '—';
+  document.getElementById('dQuyCCSb').textContent = fund.ccSheet ? 'Sheet '+fund.ccSheet : 'Chưa có dữ liệu';
+  document.getElementById('dQuyPT').textContent = fund.ptSheet ? fund.pt.toLocaleString()+'k' : '—';
+  document.getElementById('dQuyPTSb').textContent = fund.ptSheet ? 'Sheet '+fund.ptSheet : 'Chưa có dữ liệu';
+  document.getElementById('dQuy').textContent = (fund.ccSheet||fund.ptSheet) ? fund.total.toLocaleString()+'k' : '—';
 
   if(!allExpenses.length) {
-    document.getElementById('expTbl').innerHTML='<tr><td colspan="4" style="text-align:center;padding:16px;color:var(--mu)">KhÃ´ng tÃ¬m tháº¥y ghi chÃº "chá»t" nÃ o trong cÃ¡c sheet</td></tr>';
+    document.getElementById('expTbl').innerHTML='<tr><td colspan="4" style="text-align:center;padding:16px;color:var(--mu)">Không tìm thấy ghi chú "chốt" nào trong các sheet</td></tr>';
     return;
   }
   // Sort newest first
@@ -837,13 +837,13 @@ function renderExpenses(grandTotal) {
   });
   let running = grandTotal||0;
   document.getElementById('expTbl').innerHTML = sorted.map(e=>{
-    const dateStr = e.date ? e.date.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'2-digit'}) : 'â';
-    const carry = e.carry ? `<br><span style="font-size:11px;color:var(--mu)">Cá»ng ${e.carry.toLocaleString()}k thÃ¡ng trÆ°á»c</span>` : '';
+    const dateStr = e.date ? e.date.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'2-digit'}) : '—';
+    const carry = e.carry ? `<br><span style="font-size:11px;color:var(--mu)">Cộng ${e.carry.toLocaleString()}k tháng trước</span>` : '';
     return `<tr>
       <td>${dateStr}</td>
       <td style="color:var(--mu);font-size:12px">${e.sheet}</td>
-      <td>${e.note||'â'}${carry}</td>
-      <td style="color:var(--red)">â${e.amount.toLocaleString()}k</td>
+      <td>${e.note||'—'}${carry}</td>
+      <td style="color:var(--red)">−${e.amount.toLocaleString()}k</td>
     </tr>`;
   }).join('');
 }
@@ -852,25 +852,25 @@ function renderSheetGrid(){
   const g=document.getElementById('sheetGrid');
   g.innerHTML=BSHEETS.map(s=>{
     const st=sheetSt[s.name]||'id';
-    const val=st==='ok'?(s.page==='cc'?ccRev[s.mi]:ptRev[s.mi]).toLocaleString()+'k':st==='ld'?'â¦':st==='er'?'Lá»i':'';
+    const val=st==='ok'?(s.page==='cc'?ccRev[s.mi]:ptRev[s.mi]).toLocaleString()+'k':st==='ld'?'…':st==='er'?'Lỗi':'';
     const pgBadge=s.page==='pt'?`<span style="color:var(--pt);font-size:10px;font-weight:700">PT</span>`:`<span style="color:var(--cc);font-size:10px;font-weight:700">CC</span>`;
     return`<div class="sitem"><div class="sdot ${st}"></div><span class="sname">${s.mo} ${pgBadge}</span><span class="sval">${val}</span></div>`;
   }).join('');
 }
 
-// âââ DELIVERY STATS ââââââââââââââââââââââââââââââââââââ
-// DELIVERY_SHEETS ÄÆ°á»£c tá»± Äá»ng tÃ­nh trong fetchAndBuildSheets() â 2 thÃ¡ng gáº§n nháº¥t
+// ═══ DELIVERY STATS ════════════════════════════════════
+// DELIVERY_SHEETS được tự động tính trong fetchAndBuildSheets() — 2 tháng gần nhất
 
 function renderDeliveryStats() {
   const fund = calcFund();
   let sentAmt=0, pendAmt=0, sentCnt=0, pendCnt=0;
   const detailRows = [];
 
-  // Má»i named package = 1 dÃ²ng riÃªng vá»i giÃ¡ riÃªng.
-  // LÃ½ do: cÃ¹ng 1 khÃ¡ch cÃ³ thá» mua nhiá»u gÃ³i (vd "Post bÃ i page" 100k + "ÄÄng bÃ i trong group" 50k),
-  // má»i gÃ³i cÃ³ giÃ¡ riÃªng ghi á» cá»t Sá» Tiá»n trÃªn dÃ²ng nd tÆ°Æ¡ng á»©ng.
+  // Mỗi named package = 1 dòng riêng với giá riêng.
+  // Lý do: cùng 1 khách có thể mua nhiều gói (vd "Post bài page" 100k + "Đăng bài trong group" 50k),
+  // mỗi gói có giá riêng ghi ở cột Số Tiền trên dòng nd tương ứng.
 
-  const isTaskDone = t => String(t.tiendo||'').trim() === 'ÄÃ£ gá»­i khÃ¡ch' || !!t.checked;
+  const isTaskDone = t => String(t.tiendo||'').trim() === 'Đã gửi khách' || !!t.checked;
   const isTransferTask = t => { const k=normKey(t.name||'')+normKey(t.tiendo||''); return k.indexOf('chuyenquasheet')>=0||(k.indexOf('chuyen')>=0&&k.indexOf('sheet')>=0); };
   const isSpacer = t => (
     t.name === 'Task' &&
@@ -881,7 +881,7 @@ function renderDeliveryStats() {
     !t.checked && !t.hasChk
   );
 
-  // Pre-compute 1: mi cao nháº¥t per (tenkhach|tentruyen) â dÃ¹ng Äá» skip sheet cÅ©
+  // Pre-compute 1: mi cao nhất per (tenkhach|tentruyen) → dùng để skip sheet cũ
   const latestMiForKey = new Map();
   allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(b => {
     const key = normKey(b.tenkhach||'') + '|' + normKey(b.tentruyen||'');
@@ -889,8 +889,8 @@ function renderDeliveryStats() {
     if (mi > (latestMiForKey.get(key) ?? -1)) latestMiForKey.set(key, mi);
   });
 
-  // Pre-compute 2: phÃ­ tá»t nháº¥t per (tenkhach|tentruyen|pkgname) vÃ  per (tenkhach|tentruyen) booking-level
-  // â khi sheet má»i cÃ³ phÃ­ = 0, fallback vá» sheet cÅ© cÃ³ phÃ­ > 0
+  // Pre-compute 2: phí tốt nhất per (tenkhach|tentruyen|pkgname) và per (tenkhach|tentruyen) booking-level
+  // → khi sheet mới có phí = 0, fallback về sheet cũ có phí > 0
   const bestPkgAmt  = new Map(); // key = bKey+'|'+pkgName
   const bestBkAmt   = new Map(); // key = bKey (booking-level sotien)
   allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(b => {
@@ -907,45 +907,45 @@ function renderDeliveryStats() {
   allBookings.filter(b => DELIVERY_SHEETS.has(b._sheet)).forEach(booking => {
     const tenkhach = booking.tenkhach||'';
 
-    // Bá» qua náº¿u cÃ¹ng khÃ¡ch+truyá»n cÃ³ entry tá»« sheet má»i hÆ¡n
+    // Bỏ qua nếu cùng khách+truyện có entry từ sheet mới hơn
     const bKey = normKey(tenkhach) + '|' + normKey(booking.tentruyen||'');
     const bMi = BSHEETS.find(s=>s.name===booking._sheet)?.mi ?? -1;
     if (bMi < (latestMiForKey.get(bKey) ?? -1)) return;
 
-    // Bá» qua cÃ¡c entry hoÃ n tiá»n (sotien < 0) â khÃ¡ch ÄÃ£ ÄÆ°á»£c hoÃ n, khÃ´ng tÃ­nh vÃ o quá»¹
+    // Bỏ qua các entry hoàn tiền (sotien < 0) — khách đã được hoàn, không tính vào quỹ
     if (booking.sotien < 0) return;
 
-    // Page CÃ´ng chÃºa â luÃ´n hoÃ n thÃ nh, tÃ­nh booking.sotien
-    if(/^(page\s+)?c[oÃ´]ng\s*ch[uÃº]a$/i.test(tenkhach.trim())) {
+    // Page Công chúa → luôn hoàn thành, tính booking.sotien
+    if(/^(page\s+)?c[oô]ng\s*ch[uú]a$/i.test(tenkhach.trim())) {
       if(booking.sotien > 0) {
         sentAmt += booking.sotien; sentCnt++;
         detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet,
-          amt:booking.sotien, done:true, note:'Page CÃ´ng chÃºa'});
+          amt:booking.sotien, done:true, note:'Page Công chúa'});
       }
       return;
     }
 
-    const namedPkgs = booking.packages.filter(p => p.name && p.name !== 'â');
+    const namedPkgs = booking.packages.filter(p => p.name && p.name !== '—');
 
     if(namedPkgs.length === 0) {
-      // KhÃ´ng cÃ³ Ná»i Dung â kiá»m tra táº¥t cáº£ tasks
+      // Không có Nội Dung → kiểm tra tất cả tasks
       const allTasks = booking.packages.flatMap(p=>p.tasks||[]).filter(t=>!isSpacer(t));
       if(allTasks.length === 0 || booking.sotien <= 0) return;
       const done = allTasks.every(isTaskDone);
       const dCnt = allTasks.filter(isTaskDone).length;
       if(done){sentAmt+=booking.sotien;sentCnt++;}else{pendAmt+=booking.sotien;pendCnt++;}
       detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet,
-        amt:booking.sotien, done, note: done?'ÄÃ£ gá»­i khÃ¡ch':'ChÆ°a Äá»§ tiáº¿n Äá» ('+dCnt+'/'+allTasks.length+')'});
+        amt:booking.sotien, done, note: done?'Đã gửi khách':'Chưa đủ tiến độ ('+dCnt+'/'+allTasks.length+')'});
       return;
     }
 
-    // TÃ­nh xem cÃ³ package nÃ o cÃ³ sotien riÃªng khÃ´ng (ká» cáº£ fallback tá»« sheet cÅ©)
+    // Tính xem có package nào có sotien riêng không (kể cả fallback từ sheet cũ)
     const anyPkgAmt = namedPkgs.some(p => {
       const pk = bKey + '|' + normKey(p.name||'');
       return (p.sotien||0) > 0 || (bestPkgAmt.get(pk)||0) > 0;
     });
 
-    // Tá»ng giÃ¡ booking = tá»ng gÃ³i cÃ³ giÃ¡ (ká» cáº£ fallback), hoáº·c booking.sotien / bestBkAmt
+    // Tổng giá booking = tổng gói có giá (kể cả fallback), hoặc booking.sotien / bestBkAmt
     const effectiveBkAmt = booking.sotien > 0 ? booking.sotien : (bestBkAmt.get(bKey)||0);
     const bookingTotalAmt = anyPkgAmt
       ? namedPkgs.reduce((s,p) => {
@@ -954,36 +954,36 @@ function renderDeliveryStats() {
         }, 0)
       : effectiveBkAmt;
 
-    // Äá» tÃ­nh ÄÃºng tÃ i chÃ­nh: tiá»n chá» tÃ­nh lÃ  "ÄÃ£ giao" khi Táº¤T Cáº¢ gÃ³i trong booking Äá»u xong.
-    // GÃ³i 0k khÃ´ng cháº·n tÃ i chÃ­nh nhÆ°ng váº«n pháº£i hoÃ n thÃ nh Äá» tÃ­nh booking done.
+    // Để tính đúng tài chính: tiền chỉ tính là "đã giao" khi TẤT CẢ gói trong booking đều xong.
+    // Gói 0k không chặn tài chính nhưng vẫn phải hoàn thành để tính booking done.
     const namedPkgsWithTasks = namedPkgs.filter(p => (p.tasks||[]).filter(t=>!isTransferTask(t)).length > 0);
     const bookingAllDone = namedPkgsWithTasks.length > 0 &&
       namedPkgsWithTasks.every(p => (p.tasks||[]).filter(t=>!isTransferTask(t)).every(isTaskDone));
 
-    // DÃ¹ng flag Äá» chá» cá»ng tÃ i chÃ­nh 1 láº§n cho cáº£ booking (trÃ¡nh double-count)
+    // Dùng flag để chỉ cộng tài chính 1 lần cho cả booking (tránh double-count)
     let bookingFinCounted = false;
 
     namedPkgs.forEach((pkg, idx) => {
-      // XÃ¡c Äá»nh amount hiá»n thá» cho package nÃ y:
-      // - Náº¿u pkg.sotien > 0 â dÃ¹ng giÃ¡ riÃªng
-      // - Náº¿u khÃ´ng gÃ³i nÃ o cÃ³ giÃ¡ â gÃ³i Äáº§u tiÃªn dÃ¹ng booking.sotien, cÃ¡c gÃ³i sau 0
-      // - Náº¿u cÃ³ gÃ³i khÃ¡c cÃ³ giÃ¡ nhÆ°ng gÃ³i nÃ y = 0 â hiá»n "â", KHÃNG skip
+      // Xác định amount hiển thị cho package này:
+      // - Nếu pkg.sotien > 0 → dùng giá riêng
+      // - Nếu không gói nào có giá → gói đầu tiên dùng booking.sotien, các gói sau 0
+      // - Nếu có gói khác có giá nhưng gói này = 0 → hiện "—", KHÔNG skip
       let amt;
       if(anyPkgAmt) {
-        // DÃ¹ng giÃ¡ riÃªng cá»§a gÃ³i; fallback vá» sheet cÅ© náº¿u gÃ³i nÃ y chÆ°a cÃ³ giÃ¡
+        // Dùng giá riêng của gói; fallback về sheet cũ nếu gói này chưa có giá
         const pk = bKey + '|' + (pkg.name||'');
         amt = (pkg.sotien||0) > 0 ? pkg.sotien : (bestPkgAmt.get(pk)||0);
       } else {
         amt = (idx === 0) ? effectiveBkAmt : 0;
-        // KhÃ´ng early-return á» ÄÃ¢y â Äá» gÃ³i chÆ°a xong cÃ³ amt=0 váº«n hiá»n thá» â³
+        // Không early-return ở đây — để gói chưa xong có amt=0 vẫn hiển thị ⏳
       }
 
-      // Named package: dÃ¹ng Táº¤T Cáº¢ tasks â KHÃNG lá»c isSpacer
+      // Named package: dùng TẤT CẢ tasks — KHÔNG lọc isSpacer
       const realTasks = (pkg.tasks||[]).filter(t=>!isTransferTask(t));
       if(realTasks.length === 0) return;
 
       const done = realTasks.every(isTaskDone);
-      // GÃ³i ÄÃ£ xong vÃ  khÃ´ng cÃ³ giÃ¡ â bá» qua (khÃ´ng áº£nh hÆ°á»ng tÃ i chÃ­nh, khÃ´ng cáº§n hiá»n thá»)
+      // Gói đã xong và không có giá → bỏ qua (không ảnh hưởng tài chính, không cần hiển thị)
       if(done && amt <= 0) return;
 
       const dCnt = realTasks.filter(isTaskDone).length;
@@ -994,22 +994,22 @@ function renderDeliveryStats() {
       const taskSuffix = uniqueTaskNames.length > 0 ? ' ['+uniqueTaskNames.join('+')+']' : '';
       const note = pkg.name + taskSuffix + ':' + dCnt + '/' + realTasks.length;
 
-      // TÃ i chÃ­nh: chá» tÃ­nh cho gÃ³i CÃ GIÃ, vÃ  chá» tÃ­nh 1 láº§n cho cáº£ booking
-      // dá»±a trÃªn tráº¡ng thÃ¡i Táº¤T Cáº¢ gÃ³i (bookingAllDone), khÃ´ng chá» gÃ³i nÃ y
+      // Tài chính: chỉ tính cho gói CÓ GIÁ, và chỉ tính 1 lần cho cả booking
+      // dựa trên trạng thái TẤT CẢ gói (bookingAllDone), không chỉ gói này
       if(amt > 0 && !bookingFinCounted) {
         bookingFinCounted = true;
         if(bookingAllDone){ sentAmt+=bookingTotalAmt; sentCnt++; }
         else { pendAmt+=bookingTotalAmt; pendCnt++; }
       }
-      // done á» ÄÃ¢y = tráº¡ng thÃ¡i cá»§a tá»«ng package riÃªng láº» (dÃ¹ng cho note)
-      // bookingDone = toÃ n bá» booking xong hay chÆ°a (dÃ¹ng cho icon â/â³ vÃ  sort)
+      // done ở đây = trạng thái của từng package riêng lẻ (dùng cho note)
+      // bookingDone = toàn bộ booking xong hay chưa (dùng cho icon ✅/⏳ và sort)
       detailRows.push({tenkhach, tentruyen:booking.tentruyen, sheet:booking._sheet, amt, done:bookingAllDone, pkgDone:done, note, pkgname:pkg.name||''});
     });
   });
 
-  // Deduplicate: cÃ¹ng normKey(tenkhach|tentruyen|pkgname) â chá» giá»¯ 1 dÃ²ng
-  // DÃ¹ng normKey (bá» dáº¥u, bá» ná»i dung ngoáº·c) Äá» catch duplicate dÃ¹ task count khÃ¡c nhau
-  // Khi trÃ¹ng: Æ°u tiÃªn dÃ²ng cÃ³ nhiá»u thÃ´ng tin hÆ¡n (done, hoáº·c amt > 0)
+  // Deduplicate: cùng normKey(tenkhach|tentruyen|pkgname) → chỉ giữ 1 dòng
+  // Dùng normKey (bỏ dấu, bỏ nội dung ngoặc) để catch duplicate dù task count khác nhau
+  // Khi trùng: ưu tiên dòng có nhiều thông tin hơn (done, hoặc amt > 0)
   const dedupMap = new Map();
   detailRows.forEach(r => {
     const k = normKey(r.tenkhach)+'|'+normKey(r.tentruyen)+'|'+normKey(r.pkgname);
@@ -1017,7 +1017,7 @@ function renderDeliveryStats() {
     if (!existing) {
       dedupMap.set(k, r);
     } else {
-      // Giá»¯ dÃ²ng cÃ³ amt > 0 (náº¿u má»t trong 2 cÃ³ phÃ­), hoáº·c dÃ²ng done=false (chÆ°a xong quan trá»ng hÆ¡n)
+      // Giữ dòng có amt > 0 (nếu một trong 2 có phí), hoặc dòng done=false (chưa xong quan trọng hơn)
       const keepNew = (r.amt > 0 && existing.amt <= 0) || (!r.done && existing.done);
       if (keepNew) dedupMap.set(k, r);
     }
@@ -1030,35 +1030,35 @@ function renderDeliveryStats() {
     finalRows.sort((a,b)=>a.done-b.done || (a.tenkhach||'').localeCompare(b.tenkhach||''));
     tbody.innerHTML = finalRows.map(r=>`
       <tr style="border-bottom:1px solid var(--bd);background:${r.done?'rgba(34,197,94,.06)':'rgba(239,68,68,.06)'}">
-        <td style="padding:5px 8px">${r.tenkhach||'â'}</td>
-        <td style="padding:5px 8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.tentruyen||''}">${r.tentruyen||'(ná»i bá»)'}</td>
+        <td style="padding:5px 8px">${r.tenkhach||'—'}</td>
+        <td style="padding:5px 8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.tentruyen||''}">${r.tentruyen||'(nội bộ)'}</td>
         <td style="padding:5px 8px;color:var(--mu);font-size:11px">${r.sheet}</td>
-        <td style="padding:5px 8px;text-align:right;font-weight:600;color:${r.amt>0?'inherit':'var(--mu)'}">${r.amt>0?r.amt.toLocaleString()+'k':'â'}</td>
-        <td style="padding:5px 8px;text-align:center">${r.done?'â':'â³'}</td>
+        <td style="padding:5px 8px;text-align:right;font-weight:600;color:${r.amt>0?'inherit':'var(--mu)'}">${r.amt>0?r.amt.toLocaleString()+'k':'—'}</td>
+        <td style="padding:5px 8px;text-align:center">${r.done?'✅':'⏳'}</td>
         <td style="padding:5px 8px;color:var(--mu);font-size:11px">${r.note}</td>
       </tr>`).join('');
   }
 
-  // PhÃ¢n bá» quá»¹ theo tá» lá» doanh thu
+  // Phân bổ quỹ theo tỉ lệ doanh thu
   const totalRev = sentAmt + pendAmt;
   const pct = totalRev > 0 ? Math.round(sentAmt/totalRev*100) : 0;
   const fundTotal = fund.total || 0;
   const sentFund = totalRev > 0 ? Math.round(fundTotal * sentAmt / totalRev) : 0;
   const pendFund = fundTotal - sentFund;
 
-  // ÄÃ£ hoÃ n thÃ nh (quá»¹) = Tá»ng quá»¹ - phÃ­ thá»±c cÃ²n chÆ°a xong
-  // â ÄÃ£ hoÃ n thÃ nh + ChÆ°a hoÃ n thÃ nh = Tá»ng quá»¹
+  // Đã hoàn thành (quỹ) = Tổng quỹ - phí thực còn chưa xong
+  // → Đã hoàn thành + Chưa hoàn thành = Tổng quỹ
   const sentFundAdj = Math.max(0, fundTotal - pendAmt);
   document.getElementById('dlvSentAmt').textContent = sentFundAdj>0 ? sentFundAdj.toLocaleString()+'k' : '0k';
-  document.getElementById('dlvSentCnt').textContent = sentCnt+' gÃ³i Â· ' + sentAmt.toLocaleString()+'k doanh thu';
+  document.getElementById('dlvSentCnt').textContent = sentCnt+' gói · ' + sentAmt.toLocaleString()+'k doanh thu';
   document.getElementById('dlvPendAmt').textContent = pendAmt>0 ? pendAmt.toLocaleString()+'k' : '0k';
-  document.getElementById('dlvPendCnt').textContent = pendCnt+' gÃ³i Â· ' + pendAmt.toLocaleString()+'k doanh thu';
+  document.getElementById('dlvPendCnt').textContent = pendCnt+' gói · ' + pendAmt.toLocaleString()+'k doanh thu';
   document.getElementById('dlvBar').style.width = pct+'%';
-  document.getElementById('dlvLegL').textContent = 'HoÃ n thÃ nh '+pct+'%';
-  document.getElementById('dlvLegR').textContent = 'ChÆ°a xong '+(100-pct)+'%';
+  document.getElementById('dlvLegL').textContent = 'Hoàn thành '+pct+'%';
+  document.getElementById('dlvLegR').textContent = 'Chưa xong '+(100-pct)+'%';
 }
 
-// âââ DAILY STATS âââââââââââââââââââââââââââââââââââââââ
+// ═══ DAILY STATS ═══════════════════════════════════════
 function parseDate(v){
   if(!v)return null;
   if(v instanceof Date)return isNaN(v)?null:v;
@@ -1104,9 +1104,9 @@ function renderDayStats(){
   dayChart.data.datasets[0].data=dates.map(d=>dayMap[d].cc);
   dayChart.data.datasets[1].data=dates.map(d=>dayMap[d].pt);
   dayChart.update('active');
-  // Table â newest first
+  // Table — newest first
   if(!dates.length){
-    document.getElementById('dayTbl').innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--mu)">KhÃ´ng cÃ³ dá»¯ liá»u trong khoáº£ng thá»i gian nÃ y</td></tr>';
+    document.getElementById('dayTbl').innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--mu)">Không có dữ liệu trong khoảng thời gian này</td></tr>';
     return;
   }
   document.getElementById('dayTbl').innerHTML=[...dates].reverse().map(key=>{
@@ -1117,20 +1117,20 @@ function renderDayStats(){
     const today=toKey(new Date());
     const isToday=key===today;
     return`<tr style="${isToday?'background:var(--dn-bg)':''}">
-      <td>${label}${isToday?' <span style="font-size:10px;font-weight:700;color:var(--dn)">HÃM NAY</span>':''}</td>
-      <td style="color:var(--cc)">${r.cc>0?r.cc.toLocaleString()+'k':'â'}</td>
-      <td style="color:var(--pt)">${r.pt>0?r.pt.toLocaleString()+'k':'â'}</td>
+      <td>${label}${isToday?' <span style="font-size:10px;font-weight:700;color:var(--dn)">HÔM NAY</span>':''}</td>
+      <td style="color:var(--cc)">${r.cc>0?r.cc.toLocaleString()+'k':'—'}</td>
+      <td style="color:var(--pt)">${r.pt>0?r.pt.toLocaleString()+'k':'—'}</td>
       <td style="font-weight:700">${total.toLocaleString()}k</td>
       <td style="color:var(--mu)">${r.count} booking</td>
     </tr>`;
   }).join('');
 }
 
-// âââ TOP CLIENTS ââââââââââââââââââââââââââââââââââââââââ
+// ═══ TOP CLIENTS ════════════════════════════════════════
 const TOP_CLIENTS=[
-  {name:'PhÆ°Æ¡ng UyÃªn',val:7096},{name:'Sao Hoáº£',val:3320},
-  {name:'Äáº·ng Tháº¿ Duy',val:3224},{name:'Luong Le',val:2387},
-  {name:'æ½æ¹',val:1729},{name:'Má»¹ HÃ ',val:1706},
+  {name:'Phương Uyên',val:7096},{name:'Sao Hoả',val:3320},
+  {name:'Đặng Thế Duy',val:3224},{name:'Luong Le',val:2387},
+  {name:'潇湘',val:1729},{name:'Mỹ Hà',val:1706},
   {name:'Ayako',val:1600},{name:'Lunette',val:1550},
 ];
 function renderTopClients(){
@@ -1143,11 +1143,11 @@ function renderTopClients(){
   </tr>`).join('');
 }
 
-// âââ BOOKINGS âââââââââââââââââââââââââââââââââââââââââââ
+// ═══ BOOKINGS ═══════════════════════════════════════════
 function populateMoFilter(){
   const mos=[...new Set(allBookings.map(b=>b.month).filter(Boolean))];
   const sel=document.getElementById('fMo');const cur=sel.value;
-  sel.innerHTML='<option value="">Táº¥t cáº£ thÃ¡ng</option>'+mos.map(m=>`<option${m===cur?' selected':''}>${m}</option>`).join('');
+  sel.innerHTML='<option value="">Tất cả tháng</option>'+mos.map(m=>`<option${m===cur?' selected':''}>${m}</option>`).join('');
 }
 
 function filterB(){
@@ -1166,7 +1166,7 @@ function filterB(){
   document.getElementById('bkPend').textContent=filtBookings.filter(b=>b.status==='pend').length;
   document.getElementById('bkDo').textContent=filtBookings.filter(b=>b.status==='do').length;
   document.getElementById('bkDn').textContent=filtBookings.filter(b=>b.status==='dn').length;
-  document.getElementById('bCnt').textContent=filtBookings.length+(filtBookings.length!==allBookings.length?' / '+allBookings.length+' tá»ng':'')+' booking';
+  document.getElementById('bCnt').textContent=filtBookings.length+(filtBookings.length!==allBookings.length?' / '+allBookings.length+' tổng':'')+' booking';
   populateMoFilter();
   renderBookings();
 }
@@ -1175,23 +1175,23 @@ function clearBF(){document.getElementById('fPg').value='';document.getElementBy
 
 function renderBookings(){
   const cont=document.getElementById('bookingList');
-  if(!filtBookings.length){cont.innerHTML='<div class="empty">KhÃ´ng cÃ³ booking nÃ o phÃ¹ há»£p</div>';return;}
+  if(!filtBookings.length){cont.innerHTML='<div class="empty">Không có booking nào phù hợp</div>';return;}
   cont.innerHTML=filtBookings.map(b=>{
-    const pgBadge=b.page==='pt'?'<span class="bdg bdg-pt">PhÃ¹ thuá»·</span>':'<span class="bdg bdg-cc">CÃ´ng chÃºa</span>';
+    const pgBadge=b.page==='pt'?'<span class="bdg bdg-pt">Phù thuỷ</span>':'<span class="bdg bdg-cc">Công chúa</span>';
     const overallSt=`<span class="stpill ${b.status}">${stLbl(b.status)}</span>`;
-    const progPct=b.totalTasks>0?`${b.doneTasks}/${b.totalTasks} task`:'â';
+    const progPct=b.totalTasks>0?`${b.doneTasks}/${b.totalTasks} task`:'—';
     const packagesHtml=b.packages.map(p=>{
       const pClr=p.status==='dn'?'var(--dn)':p.status==='do'?'var(--do)':'var(--pend)';
       const barCls=p.status==='dn'?'prog-dn':p.status==='do'?'prog-do':'prog-pend';
       const tasksHtml=p.tasks.map(t=>{
         const tst=t.status||'pend';
         const nameCls=tst==='dn'?'task-name done-txt':'task-name';
-        const stLabels={pend:'ChÆ°a lÃ m',do:'Äang lÃ m',dn:'Xong'};
+        const stLabels={pend:'Chưa làm',do:'Đang làm',dn:'Xong'};
         const tdDisplay=(t.tiendo&&typeof t.tiendo==='string'&&t.tiendo.trim())?t.tiendo:stLabels[tst];
         const linkHtml=t.linkpage?`<a href="${t.linkpage}" target="_blank" class="task-link">[link]</a>`:'';
         const whoHtml=t.nguoilam?`<span class="task-who">${t.nguoilam}</span>`:'';
         return`<div class="task-row">
-          <span class="task-st task-st-${tst}" onclick="cycleTask('${b._id}','${p._id}','${t._id}')" title="Click Äá» Äá»i tráº¡ng thÃ¡i">${tdDisplay}</span>
+          <span class="task-st task-st-${tst}" onclick="cycleTask('${b._id}','${p._id}','${t._id}')" title="Click để đổi trạng thái">${tdDisplay}</span>
           <span class="${nameCls}">${t.name}</span>
           ${whoHtml}${linkHtml}
         </div>`;
@@ -1210,7 +1210,7 @@ function renderBookings(){
         ${pgBadge}
         <div class="binfo">
           <div class="bclient">${b.tenkhach}</div>
-          <div class="bstory">${b.tentruyen||'â'}</div>
+          <div class="bstory">${b.tentruyen||'—'}</div>
         </div>
         <div class="bmeta">
           ${overallSt}
@@ -1233,9 +1233,9 @@ async function cycleTask(bookingId,pkgId,taskId){
   const b=allBookings.find(x=>x._id===bookingId);if(!b)return;
   const p=b.packages.find(x=>x._id===pkgId);if(!p)return;
   const t=p.tasks.find(x=>x._id===taskId);if(!t)return;
-  // Cycle: pend â do â dn â pend
+  // Cycle: pend → do → dn → pend
   const cycle={pend:'do',do:'dn',dn:'pend'};
-  const valMap={pend:'',do:'Äang lÃ m',dn:'Xong'};
+  const valMap={pend:'',do:'Đang làm',dn:'Xong'};
   t.status=cycle[t.status||'pend'];
   t.done=t.status==='dn';
   t.tiendo=valMap[t.status];
@@ -1256,14 +1256,14 @@ async function cycleTask(bookingId,pkgId,taskId){
   setTimeout(()=>{const el=document.getElementById('bc_'+bookingId);if(el&&!el.classList.contains('open'))el.classList.add('open');},10);
 }
 
-// âââ POLICY ââââââââââââââââââââââââââââââââââââââââââââ
+// ═══ POLICY ════════════════════════════════════════════
 function renderPolicy(){
   const cont=document.getElementById('polContent');
-  if(!policyData.length){cont.innerHTML='<div class="empty">KhÃ´ng cÃ³ dá»¯ liá»u chÃ­nh sÃ¡ch</div>';return;}
+  if(!policyData.length){cont.innerHTML='<div class="empty">Không có dữ liệu chính sách</div>';return;}
   cont.innerHTML=`<div class="pol-grid">${policyData.map(p=>`
     <div class="pol-card">
       <div class="pol-card-top">
-        <div class="pol-name">${p.ten||'â'}</div>
+        <div class="pol-name">${p.ten||'—'}</div>
         ${p.gia?`<div class="pol-price">${p.gia}</div>`:''}
       </div>
       <div class="pol-card-body">
@@ -1274,7 +1274,7 @@ function renderPolicy(){
   </div>`;
 }
 
-// âââ TAB SWITCH ââââââââââââââââââââââââââââââââââââââââ
+// ═══ TAB SWITCH ════════════════════════════════════════
 function switchTab(t){
   curTab=t;
   ['dash','task','policy'].forEach(id=>{
@@ -1290,28 +1290,28 @@ function switchTab(t){
   if(t==='policy'&&!polLoaded){renderPolicy();polLoaded=true;}
 }
 
-// âââ CHARTS INIT âââââââââââââââââââââââââââââââââââââââ
+// ═══ CHARTS INIT ═══════════════════════════════════════
 function initCharts(){
   const gc='rgba(0,0,0,0.05)',tc='#aaa';
   barChart=new Chart(document.getElementById('barChart'),{
     type:'bar',
     data:{labels:MONTHS,datasets:[
-      {label:'CÃ´ng chÃºa',data:[...ccRev],backgroundColor:'#c44a72',borderRadius:4,stack:'s'},
-      {label:'PhÃ¹ thuá»·',data:[...ptRev],backgroundColor:'#2d7dd2',borderRadius:4,stack:'s'}
+      {label:'Công chúa',data:[...ccRev],backgroundColor:'#c44a72',borderRadius:4,stack:'s'},
+      {label:'Phù thuỷ',data:[...ptRev],backgroundColor:'#2d7dd2',borderRadius:4,stack:'s'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString()}k`}}},
       scales:{x:{stacked:true,ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{stacked:true,ticks:{color:tc,font:{size:11},callback:v=>v.toLocaleString()+'k'},grid:{color:gc}}}}
   });
   donutChart=new Chart(document.getElementById('donutChart'),{
     type:'doughnut',
-    data:{labels:['CÃ´ng chÃºa','PhÃ¹ thuá»·'],datasets:[{data:[1,0],backgroundColor:['#c44a72','#2d7dd2'],borderWidth:0,hoverOffset:5}]},
+    data:{labels:['Công chúa','Phù thuỷ'],datasets:[{data:[1,0],backgroundColor:['#c44a72','#2d7dd2'],borderWidth:0,hoverOffset:5}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed.toLocaleString()}k`}}},cutout:'62%'}
   });
   dayChart=new Chart(document.getElementById('dayChart'),{
     type:'bar',
     data:{labels:[],datasets:[
-      {label:'CÃ´ng chÃºa',data:[],backgroundColor:'#c44a72cc',borderRadius:3,stack:'s'},
-      {label:'PhÃ¹ thuá»·', data:[],backgroundColor:'#2d7dd2cc',borderRadius:3,stack:'s'}
+      {label:'Công chúa',data:[],backgroundColor:'#c44a72cc',borderRadius:3,stack:'s'},
+      {label:'Phù thuỷ', data:[],backgroundColor:'#2d7dd2cc',borderRadius:3,stack:'s'}
     ]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString()}k`}}},
@@ -1323,20 +1323,20 @@ function initCharts(){
   });
 }
 
-// âââ SETUP MODAL âââââââââââââââââââââââââââââââââââââââ
-const ASC=`// Paste vÃ o Extensions â Apps Script cá»§a Google Sheets
-// Deploy â New deployment â Web app
+// ═══ SETUP MODAL ═══════════════════════════════════════
+const ASC=`// Paste vào Extensions → Apps Script của Google Sheets
+// Deploy → New deployment → Web app
 // Execute as: Me | Who has access: Anyone
 
 const SHEET_ID = '1ymBQnlD3_3cHj6QFrQ4mmiebR1bzAnP5';
-const COLS = ['NgÃ y ck','TÃªn KhÃ¡ch','TÃªn Truyá»n','Link file ','Ná»i Dung',
-  'Háº¡ng má»¥c','Link page/tiktok','NgÆ°á»i lÃ m',
-  'Note (tiktok tick khi Äá»§ 100 tim, cÃ²n láº¡i tick khi hoÃ n thÃ nh)',
-  'Tiáº¿n Äá»','Sá» Tiá»n','Tá»ng'];
+const COLS = ['Ngày ck','Tên Khách','Tên Truyện','Link file ','Nội Dung',
+  'Hạng mục','Link page/tiktok','Người làm',
+  'Note (tiktok tick khi đủ 100 tim, còn lại tick khi hoàn thành)',
+  'Tiến độ','Số Tiền','Tổng'];
 
 function sheetName(page, date) {
   const d = date ? new Date(date) : new Date();
-  return (page==='pt'?'PhÃ¹ thuá»· T':'CÃ´ng chÃºa T')+(d.getMonth()+1)+'-'+d.getFullYear();
+  return (page==='pt'?'Phù thuỷ T':'Công chúa T')+(d.getMonth()+1)+'-'+d.getFullYear();
 }
 
 function doGet(e) {
@@ -1356,12 +1356,12 @@ function doGet(e) {
 
 function readAll() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const skip = ['GÃ³i + ChÃ­nh SÃ¡ch','ChÃ­nh SÃ¡ch Referral'];
+  const skip = ['Gói + Chính Sách','Chính Sách Referral'];
   const tasks = [];
   ss.getSheets().forEach(function(sh) {
     const name = sh.getName();
     if (skip.includes(name)) return;
-    const page = name.includes('PhÃ¹ thu') ? 'pt' : 'cc';
+    const page = name.includes('Phù thu') ? 'pt' : 'cc';
     const vals = sh.getDataRange().getValues();
     if (vals.length < 2) return;
     const hdr = vals[0];
@@ -1391,9 +1391,9 @@ function updateRow(p) {
   if (!sh) return { status:'error', msg:'sheet not found' };
   const row = parseInt(p._row);
   const hdr = sh.getRange(1,1,1,sh.getLastColumn()).getValues()[0];
-  const map = { tenkhach:'TÃªn KhÃ¡ch', tentruyen:'TÃªn Truyá»n', linkfile:'Link file ',
-    noidung:'Ná»i Dung', hangmuc:'Háº¡ng má»¥c', linkpage:'Link page/tiktok',
-    nguoilam:'NgÆ°á»i lÃ m', tiendo:'Tiáº¿n Äá»', sotien:'Sá» Tiá»n', ngayck:'NgÃ y ck' };
+  const map = { tenkhach:'Tên Khách', tentruyen:'Tên Truyện', linkfile:'Link file ',
+    noidung:'Nội Dung', hangmuc:'Hạng mục', linkpage:'Link page/tiktok',
+    nguoilam:'Người làm', tiendo:'Tiến độ', sotien:'Số Tiền', ngayck:'Ngày ck' };
   Object.keys(map).forEach(function(k) {
     if (p[k]===undefined) return;
     const col = hdr.indexOf(map[k])+1; if (!col) return;
@@ -1416,16 +1416,16 @@ function deleteRow(p) {
 function openSetup(){document.getElementById('aUrl').value=AU;document.getElementById('ascCode').textContent=ASC;document.getElementById('testRes').innerHTML='';document.getElementById('setupOverlay').style.display='flex';}
 function closeSetup(){document.getElementById('setupOverlay').style.display='none';}
 function saveSetup(){AU=document.getElementById('aUrl').value.trim();localStorage.setItem('bkAU',AU);closeSetup();loadAll();}
-function cpCode(){navigator.clipboard.writeText(ASC).then(()=>alert('ÄÃ£ copy code Apps Script!'));}
+function cpCode(){navigator.clipboard.writeText(ASC).then(()=>alert('Đã copy code Apps Script!'));}
 async function testConn(){
   const url=document.getElementById('aUrl').value.trim();const div=document.getElementById('testRes');
-  if(!url){div.innerHTML='<span style="color:var(--red)">Nháº­p URL trÆ°á»c</span>';return;}
-  div.innerHTML='Äang kiá»m tra...';const tmp=AU;AU=url;
-  try{const r=await asCall({action:'ping'});if(r&&r.status==='ok')div.innerHTML='<span style="color:var(--dn);font-weight:600">â Káº¿t ná»i thÃ nh cÃ´ng!</span>';else throw new Error();}
-  catch(e){div.innerHTML='<span style="color:var(--red)">Káº¿t ná»i tháº¥t báº¡i. Kiá»m tra URL vÃ  cÃ i Äáº·t deploy.</span>';AU=tmp;}
+  if(!url){div.innerHTML='<span style="color:var(--red)">Nhập URL trước</span>';return;}
+  div.innerHTML='Đang kiểm tra...';const tmp=AU;AU=url;
+  try{const r=await asCall({action:'ping'});if(r&&r.status==='ok')div.innerHTML='<span style="color:var(--dn);font-weight:600">✓ Kết nối thành công!</span>';else throw new Error();}
+  catch(e){div.innerHTML='<span style="color:var(--red)">Kết nối thất bại. Kiểm tra URL và cài đặt deploy.</span>';AU=tmp;}
 }
 
-// âââ INIT ââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══ INIT ══════════════════════════════════════════════
 initCharts();
 loadAll();
 </script>
